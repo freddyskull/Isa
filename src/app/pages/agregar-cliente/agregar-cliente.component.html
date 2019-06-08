@@ -1,0 +1,9 @@
+<body class="dark-edition animated fadeIn">
+  <app-navigate></app-navigate>
+  <div class="ml-5">
+      <nav class="nav-component">
+        <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio</a> / <a [routerLink]="['/clientes']" routerLinkActive="router-link-active" >Lista de clientes</a> / <a [routerLink]="['/clientes/Agregar']" routerLinkActive="router-link-active" >Agregar clientes</a> 
+      </nav>
+  </div>
+<app-client-form></app-client-form>
+</body>

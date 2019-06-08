@@ -1,0 +1,144 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-header card-header-success">
+          <div class="ct-chart" id="dailySalesChart"></div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Ventas de este mes</h4>
+          <p class="card-category">
+            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> incremento.</p>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> ultima actualización
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-header card-header-warning">
+          <div class="ct-chart" id="websiteViewsChart"></div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Correos suscritos a la página</h4>
+          <p class="card-category">Ultima persona subscrita: </p>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> Ultima actualización
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-header card-header-danger">
+          <div class="ct-chart" id="completedTasksChart"></div>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Completed Tasks</h4>
+          <p class="card-category">Last Campaign Performance</p>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> campaign sent 2 days ago
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6" *ngIf="position == 'jefe' || position == 'empleado'">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">content_paste</i>
+          </div>
+          <p class="card-category">Total en mercancia</p>
+          <h4 class="card-title">{{suma}}
+            <small>productos</small>
+          </h4>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons text-warning">warning</i>
+            <a class="warning-link" [routerLink]="['/existencias']" routerLinkActive="router-link-active" >{{poca}} Productos con poca existencia</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 animated pulse">
+      <div class="card card-stats">
+        <div class="card-header card-header-success card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">attach_money</i>
+          </div>
+          <p class="card-category">Precio DolarToday</p>
+          <h4 class="card-title">{{usdValor}} 
+            <small>Bs</small>
+          </h4>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">date_range</i> {{usdfecValor}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6" *ngIf="position == 'jefe'">
+      <div class="card card-stats">
+        <div class="card-header card-header-danger card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">info_outline</i>
+          </div>
+          <p class="card-category">Inverción Bs</p>
+          <h5 class="card-title" style="font-size:1rem">{{sumaBs | number}}
+            <small>Bs</small>
+          </h5>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">local_offer</i> Bs en productos en el almacén
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6" *ngIf="position == 'jefe'">
+      <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+          <div class="card-icon">
+              <i class="material-icons">all_inclusive</i>
+          </div>
+          <p class="card-category">Inverción $</p>
+          <h4 class="card-title"> {{Usd | currency}} </h4>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">local_offer</i>Total invertido en $
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Tu historial de ventas</h4>
+            <p class="card-category">Obten de una manera rapida todas las ventas que has producido</p>
+          </div>
+          <div class="card-body table-responsive">
+            <app-history-user></app-history-user>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12" *ngIf="position == 'jefe'">
+        <mat-slide-toggle name="pemiss" [(ngModel)]="inputPermiss" (click)="updatePemiss()" >
+          <small>Activar o desactiva la Edición de inventario, </small>
+        </mat-slide-toggle>
+        <small> tenga en cuenta que este cambio serán visible solo para los empleados, los vendedores simplemente no pueden hacer cambios al inventario</small>
+      </div>
+  </div>
+  
+

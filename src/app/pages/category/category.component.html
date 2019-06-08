@@ -1,0 +1,92 @@
+<body class="dark-edition animated fadeIn">
+    <app-navigate></app-navigate>
+    <div class="ml-5">
+            <nav class="nav-component">
+              <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio /</a>  <a [routerLink]="['/categorias']" routerLinkActive="router-link-active" >Lista categorias /</a> <a [routerLink]="['/productos']" routerLinkActive="router-link-active" > Productos</a> 
+            </nav>
+          </div>
+    <div class="text-center m-5">
+        <a routerLink="/categorias/agregar" *ngIf="categorias"><p class="add mt-4 animated fadeIn">AGREGAR NUEVA CATEGORÍA</p> </a>
+        <div class="animated fadeIn" *ngIf="busqueda">
+            <ul>
+                <li><button value="CPTURE" (click)="captureScreen()" class="no-class" ><p class="add mt-4 text-danger">DESCARGAR PDF <i class="fas fa-file-pdf" style="font-size:1.5rem"></i></p> </button></li>
+                <li> <app-export-excel [arrayExcel]="arrayExcel"></app-export-excel></li>
+                <li><button class="animated fadeIn no-class"  (click)="busqueda = false; categorias = true">Volver</button></li>
+            </ul>
+        </div>
+    </div>
+   <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-sm-12" *ngFor="let item of cat">
+                <div class="card card-profile animated fadeIn" *ngIf="categorias">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>{{item.name}}</h3>
+                            <p class="text-align-left">{{item.description}}</p>
+                        </div>
+                        <div class="card-body text-center mt-2">
+                            <a class="btn btn-warning btn-round mr-2" [routerLink]="['/categorias/editar/', item.id]" routerLinkActive="router-link-active" ><i class="material-icons">create</i></a>
+                            <a class="btn btn-info btn-round mr-2" (click)="getCat(item.id)"><i class="material-icons">search</i></a>
+                            <a class="btn btn-danger btn-round mr-2" (click)="deleteCat(item.id)"><i class="material-icons">delete</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="animated slideInLeft text-center" *ngIf="busqueda">
+            <table class="table">
+                <thead>
+                    <th> <strong>Cantidad</strong> </th>
+                    <th> <strong>Nombre</strong> </th>
+                    <th> <strong>Precio Bs</strong> </th>
+                    <th> <strong>Precio USD</strong> </th>
+                    <th> <strong>Promoción</strong> </th>
+                    <th> <strong>Fecha V</strong> </th>
+                </thead>
+                <tbody *ngFor="let item of search">
+                <tr>
+                    <td>{{item.stock}} </td>
+                    <td>{{item.name}}</td>
+                    <td *ngIf="item.priceB != 0">{{item.priceS | number}} </td>
+                    <td *ngIf="item.priceB != 0">{{item.priceS / Usd | currency}} </td>
+                    <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | number}} </td>
+                    <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
+                    <td *ngIf="item.pricePro != 0">{{item.pricePro | number}}</td>
+                    <td *ngIf="item.pricePro == 0"></td>
+                    <td> {{item.fecven}} </td> 
+                </tr>
+                </tbody>
+            </table> 
+            <table class="tablee2" id="contentToConvert">
+                <thead>
+                    <th> <strong>Cantidad</strong> </th>
+                    <th> <strong>Nombre</strong> </th>
+                    <th> <strong>Precio Bs</strong> </th>
+                    <th> <strong>Precio USD</strong> </th>
+                    <th> <strong>Fecha V</strong> </th>
+                </thead>
+                <tbody *ngFor="let item of search">
+                <tr>
+                    <td>{{item.stock}} </td>
+                    <td>{{item.name}}</td>
+                    <td *ngIf="item.priceB != 0">{{item.priceS | number}} </td>
+                    <td *ngIf="item.priceB != 0">{{item.priceS / Usd | currency}} </td>
+                    <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | number}} </td>
+                    <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
+                    <td> {{item.fecven}} </td> 
+                </tr>
+                </tbody>
+            </table> 
+           
+        </div>
+   </div>
+</body>
+
+
+            
+   
+
+
+
+      
+    

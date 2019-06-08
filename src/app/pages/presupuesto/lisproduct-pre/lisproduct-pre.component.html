@@ -1,0 +1,20 @@
+<div class="animated slideInLeft" *ngIf="show">
+  <div class="col-md-12">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Buscar medicamento..." name="filter" [(ngModel)]="filter" style="font-size:1.5rem">
+      </div> 
+  </div>
+  <div class="row">
+    <div class="col-md-4 float-left" *ngFor="let item of productos | filterProduct:filter">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{item.name}} <br> Unidades: <span class="text-primary">{{item.stock}}</span> </h5>
+          <p class="card-text">{{item.description}}</p>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-warning btn-lg btn-block" (click)="getPro(item.id); show=false; filter = ''">Elegir</button>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>

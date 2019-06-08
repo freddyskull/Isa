@@ -1,0 +1,129 @@
+<div class="animated fadeIn">
+  <app-navigate></app-navigate>
+  <div class="ml-5">
+      <nav class="nav-component">
+        <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio /</a>  <a [routerLink]="['/empleados']" routerLinkActive="router-link-active" > Empleados</a> 
+      </nav>
+  </div>
+  
+  <div class="container-fluid mt-5">
+    <div class="row text-center">
+      <div class="col-12 ">
+          <mat-tab-group  mat-align-tabs="center" >
+              <mat-tab label="Ventas pendientes" >
+                  <div class="row mt-5" *ngIf="position == 'jefe'">
+                    <div class="col-md-4" *ngFor="let item of pendientesJe">
+                      <div class="card card-profile" >
+                        <button class="close" (click)="delete(item.id)" matTooltip="Si presiona este botón este objeto será eliminado del estado pendiente, pero aún quedará en el historial de ventas, esta opción es solo disponible para los jefes"
+                        aria-label="Button that displays a tooltip when focused or hovered over">
+                          <i class="fas fa-times" ></i>
+                      </button>
+                        <div class="card-body">
+                          <small class="card-category"> Encargado de facturación "{{item.encargado}}"</small>
+                          <h6 class="card-category"> Vendedor {{item.vendedor}} | Tipo: {{item.tipo}} </h6>
+                          <h4 class="card-title mb2"> Comprador {{item.comprador}} </h4>
+                          <div class="row mt-2 mb-4 ">
+                            <div class="col-md-6 text-left">
+                              <span *ngIf="item.total$ == 0">Total {{item.total    | number}}</span>
+                              <span *ngIf="item.total  == 0">Total {{item.total$  | currency}}</span>
+                              <span *ngIf="item.total$ > 0 && item.total > 0"> Total {{item.total$  | currency}} | Bs {{item.total | number}}</span>
+                            </div>
+                            <div class="col-md-6 text-left">
+                              <span  *ngIf="item.estado == 0">Estado: <strong class="text-success">Pagado</strong></span>
+                              <span  *ngIf="item.estado == 1">Estado: <strong class="text-danger"> Pendiente</strong></span>
+                            </div>
+                            <div class="col-md-6 text-left">
+                              Observación: {{item.observa}}
+                            </div>
+                            <hr>
+                            <div class="col-md-12 text-center">
+                              <i class="fas fa-calendar-day"></i> {{item.fecha | date}}
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-center">
+                              <mat-slide-toggle name="swich" [(ngModel)]="item.estado" (click)="updatePend(item.id,item.estado)" ></mat-slide-toggle>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="position != 'jefe'">
+                    <div class="col-md-4" *ngFor="let item of pendientesUs">
+                      <div class="card card-profile">
+                        <div class="card-body">
+                          <h6 class="card-category"> Vendedor {{item.vendedor}} | Tipo: {{item.tipo}} </h6>
+                          <h4 class="card-title mb2"> Comprador {{item.comprador}} </h4>
+                          <div class="row mt-2 mb-4 ">
+                            <div class="col-md-6 text-left">
+                              <span *ngIf="item.total$ == 0">Total {{item.total    | number}}</span>
+                              <span *ngIf="item.total  == 0">Total {{item.total$  | currency}}</span>
+                              <span *ngIf="item.total$ > 0 && item.total > 0"> Total {{item.total$  | currency}} | Bs {{item.total | number}}</span>
+                            </div>
+                            <div class="col-md-6 text-left">
+                              <span  *ngIf="item.estado == 0">Estado: <strong class="text-success">Pagado</strong></span>
+                              <span  *ngIf="item.estado == 1">Estado: <strong class="text-danger"> Pendiente</strong></span>
+                            </div>
+                            <div class="col-md-6 text-left">
+                              Observación: {{item.observa}}
+                            </div>
+                            <hr>
+                            <div class="col-md-12 text-center">
+                              <i class="fas fa-calendar-day"></i> {{item.fecha | date}}
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-center"  *ngIf="position == 'jefe' || position == 'empleado'">
+                              <mat-slide-toggle name="swich" [(ngModel)]="item.estado" (click)="updatePend(item.id,item.estado)" ></mat-slide-toggle>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </mat-tab>
+              <mat-tab label="Historial de ventas" *ngIf="position == 'jefe'">
+                <app-history-ventas></app-history-ventas>
+              </mat-tab>
+              <mat-tab label="Historial de productos" *ngIf="position == 'jefe'">
+                <div class="row mt-5">
+                  <table mat-table [dataSource]="dataSource" class="table">
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="recibo">
+                        <th mat-header-cell *matHeaderCellDef> Encargado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.recibo}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="stock">
+                        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                        <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="marca">
+                        <th mat-header-cell *matHeaderCellDef> marca </th>
+                        <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="fecven">
+                        <th mat-header-cell *matHeaderCellDef> Fecha de vencimiento </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fecven }} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="create_at">
+                          <th mat-header-cell *matHeaderCellDef> Ultima actualización </th>
+                          <td mat-cell *matCellDef="let element"> {{element.create_at | date}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="priceB">
+                          <th mat-header-cell *matHeaderCellDef> Precio Bs </th>
+                          <td mat-cell *matCellDef="let element"> {{element.priceS | number}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="priceB$">
+                          <th mat-header-cell *matHeaderCellDef> Precio USD </th>
+                          <td mat-cell *matCellDef="let element"> {{element.priceB$ | currency}} </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                </div>  
+              </mat-tab>
+          </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>
