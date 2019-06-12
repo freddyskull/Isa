@@ -1,0 +1,45 @@
+<div class="animated fadeIn">
+  <app-navigate></app-navigate>
+  <div class="ml-5">
+      <nav class="nav-component">
+        <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio /</a>  <a [routerLink]="['/empleados']" routerLinkActive="router-link-active" > Empleados</a> 
+      </nav>
+  </div>
+  <div class="text-center m-5 animated fadeIn">
+      <a routerLink="/empleados/agregar" ><p class="add">AGREGAR NUEVO PERSONAL</p> </a>
+  </div>
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let item of users">
+        <div class="card card-profile">
+          <div class="card-avatar">
+              <img  src="./assets/img/jefe.png" *ngIf="item.position == 'jefe'"/>
+              <img  src="./assets/img/vendedor.png" *ngIf="item.position == 'vendedor'">
+              <img  src="./assets/img/empleado.png" *ngIf="item.position == 'empleado'">
+          </div>
+          <div class="card-body">
+            <h6 class="card-category"> {{item.position}} </h6>
+            <h4 class="card-title"> {{item.name}} </h4>
+            <div class="row mt-2 mb-2 text-left">
+              <div class="col md-6">
+                  Usuario: {{item.userName}}
+              </div>
+              <div class="col md-6">
+                  Teléfono: {{item.tel}}
+              </div>
+            </div>
+            <div class="row mt-2 mb-4 text-left">
+                <div class="col md-6 ">
+                    Número de cuenta: {{item.payMethod}}
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-warning btn-round mr-4" [routerLink]="['/empleados/editar/',item.id]" routerLinkActive="router-link-active"  ><i class="material-icons">create</i></a>
+                <a  class="btn btn-danger btn-round" (click)="deleteEmp(item.id)" ><i class="material-icons">delete</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

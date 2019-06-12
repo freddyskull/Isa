@@ -1,5 +1,5 @@
 {
-  "name": "ISA",
+  "name": "isa",
   "version": "1.0.0",
   "license": "MIT",
   "description": "Sistema de administración y facturación de productos para insufarma",
@@ -15,7 +15,7 @@
     "electro": "electron .",
     "pack": "build --dir",
     "dist": "ng build --prod",
-    "exe": "ng build && electron-packager . --platform=win32"
+    "exe": "electron-packager . --platform=win32"
   },
   "private": true,
   "dependencies": {
