@@ -1,0 +1,14 @@
+<nav class="navbar bg-danger justify-content-between"  style="background-color:transparent">
+		<a routerLink="/inicio" class="navbar-brand"><img class="img-logo" src="./assets/img/logo.png"></a>
+</nav>
+<div id="mainMenu" class="mainMenuOverlay floating2" [ngClass]="status ? 'open' : 'close'" >
+  <div class="navire floating3"></div>
+	<div class="itemMenuBox bills"><a routerLink="/inicio" class="itemMenu"><i class="material-icons">dashboard</i></a></div>
+	<div class="itemMenuBox tarsheed"><a routerLink="/clientes" class="itemMenu tooltips"><i class="material-icons">person</i></a></div>
+	<div class="itemMenuBox employees"><a routerLink="/ventas-pendientes" class="itemMenu "><i class="material-icons">info</i></a></div>
+	<div class="itemMenuBox location"><a routerLink="/"  class="itemMenu "><i class="fa fa-key" aria-hidden="true"></i></a></div>
+	<div class="itemMenuBox eservices"><a routerLink="/productos" class="itemMenu tooltips"><i class="fas fa-clipboard-list" aria-hidden="true"></i></a></div>
+	<div class="itemMenuBox contact"><a routerLink="/categorias" class="itemMenu "><i class="material-icons">format_list_numbered</i></a></div>
+	
+	<a  class="toggleMenu floating" (click)="clickEvent()" ><i class="fa fa-bars" aria-hidden="true"></i></a>
+</div>

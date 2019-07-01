@@ -1,3 +1,10 @@
+<div class="text-center text-light">
+  <h3>Total de productos {{pre.length}}</h3>
+  <div *ngIf="pre.length > 14" class="text-center animated shake">
+    <h4 class="text-danger">¡Alerta! facturación desabilitada</h4> 
+    <p class="text-light">Esto se debe a que la factura solo puede contener 14 articulos, aún posible generar facturas en modo pdf y nota de entrega</p>
+  </div>
+</div>
 <div class="card animated pulse" *ngIf="pre.length > 0">
   <table class="table table-hover">
     <thead>
@@ -6,34 +13,39 @@
         <th scope="col">Cantidad</th>
         <th scope="col">Bs</th>
         <th scope="col">Usd</th>
-        <th scope="col">acción</th>
+        <th scope="col">Eliminar</th>
+        <th scope="col">Editar</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of pre">
-        <th>{{item.name}}</th>
-        <td style="padding-left:38px"> {{item.stock}}</td>
-        <td>{{item.price | number}}</td>
+        <td>{{item.name}}</td>
+        <td style="padding-left:38px">{{item.stock}}</td>
+        <td>{{(item.price) | convertBs}}</td>
         <td>{{item.price2 | currency}}</td>
-        <button class="no-class text-danger" (click)="delete(item)"><td style="padding-left:25px">x</td></button>
+        <button class="no-class text-danger" (click)="openDialog(item)"><td style="padding-left:25px">x</td></button>
+        <td><a href="#" class="text-warning" (click)="editStock(item.id, item.stock, item)"><i class="material-icons">create</i></a></td>
       </tr>
     </tbody>
   </table>
   <div class="text-info text-right mr-4">
-      Presupuesto total: Bs {{obtenerTotal() | number}} | {{obtenerTotal()  / usdValor | currency}}
+      Presupuesto total: Bs {{ (obtenerTotal()) | convertBs }} | {{obtenerTotal()  / usdValor | currency}}
   </div>
   <div class="m-2">
-      <a [routerLink]="['/factura']" routerLinkActive="router-link-active"  class="btn btn-success btn-lg btn-block animated pulse">terminar</a>
+      <a [routerLink]="['/factura']" routerLinkActive="router-link-active"  class="btn btn-success btn-lg btn-block animated pulse">Facturar</a>
+  </div>
+  <div *ngIf="pre.length > 14" class="text-warning text-center animated shake m-2">
+    <p>la opción de facturación por modo libre será desabilitada, si desea facturar por modo libre por favor genere un presupuesto con menos de 14 articulos, aún es posible generar presupuestos, si tienen menos de 22 articulos el resultado será en pdf, de lo contrario será en una tabla excel</p>
   </div>
 </div>
 <div *ngIf="pre.length > 0">
   <div class="row m-5 animated fadeIn" *ngIf="option">
     <p class="text-light">Si desea generar presupuesto por favor eliga en que moneda será dicho presupuesto</p> 
     <div class="col-md-6 text-center">
-        <button class="no-class"><h2 class="text-warning" (click)="presupuest(); back('Bs'); option = false;  currency = 'Bs'" >BS <i class="fas fa-coins"></i></h2></button>
+        <button class="no-class"><h2 class="text-warning" (click)="presupuest(); variblesEnviar() ;back('Bs'); option = false;  currency = 'Bs'" >BS <i class="fas fa-coins"></i></h2></button>
     </div>
     <div class="col-md-6 text-center">
-        <button class="no-class"><h2 class="text-success" (click)="presupuest(); back('Usd'); option = false;  currency = 'Usd'">USD <i class="fas fa-dollar-sign"></i></h2></button>
+        <button class="no-class"><h2 class="text-success" (click)="presupuest(); variblesEnviar(); back('Usd'); option = false;  currency = 'Usd'">USD <i class="fas fa-dollar-sign"></i></h2></button>
     </div>
   </div>
   <div class="row" *ngIf="option == false">
@@ -62,7 +74,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form  class="form" #form="ngForm" (ngSubmit)="presupuest()">
+          <form  class="form" #form="ngForm" (ngSubmit)="presupuest(pre.length)">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -74,28 +86,35 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Rif o cédula" name="rif" [(ngModel)]="variables.rifCed" required >
+                    <input matInput placeholder="Rif o cédula" name="rif" [(ngModel)]="variables.rifCed" required>
                   </mat-form-field>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Dirección" name="dir" [(ngModel)]="variables.address" required  >
+                    <input matInput placeholder="Dirección" name="dir" [(ngModel)]="variables.address">
                   </mat-form-field>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Teléfono"  name="tel" [(ngModel)]="variables.tlf" required  >
+                    <input matInput placeholder="Dirección" name="dir" [(ngModel)]="variables.address2">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Teléfono"  name="tel" [(ngModel)]="variables.tlf">
                   </mat-form-field>
                 </div>
               </div>
               <div class="col-md-6">
                 <mat-form-field class="mt-4">
                   <mat-label>Seleccione un vendedor</mat-label>
-                  <mat-select name="vendeor" [(ngModel)]="variables.vendedor" required>
+                  <mat-select name="vendeor" [(ngModel)]="variables.vendedor">
                     <mat-option *ngFor="let item of userList" [value]="item.name">
                       {{item.name}}
                     </mat-option>
@@ -112,9 +131,13 @@
               </div> 
             </div>
             <button type="submit" class="btn btn-secundary btn-lg btn-block">Generar</button>
+            <div *ngIf="pre.length > 22" class="text-warning text-center animated shake m-2">
+              <p>El presupuesto es demasiado grande, esté será generado en un archivo excel el cual contendrá cantidad nombre precio unidad precio total y si posee iva, en caso de que el campo iva se encuetre vacio significa que dicho articulo poseé iva</p>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+

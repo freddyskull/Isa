@@ -4,14 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { materialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigateComponent } from './components/navigate/navigate.component';
 import { FormProductComponent } from './components/form-product/form-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
-import { ListClientComponent } from './components/list-client/list-client.component'
+import { ListClientComponent } from './pages/client/list-client/list-client.component'
 import { ProductService } from './services/product.service';
 
 import { Navigate2Component } from './components/navigate2/navigate2.component';
@@ -26,9 +25,8 @@ import { ProveedoresComponent } from './pages/proveedores/proveedores.component'
 import { ListProviderComponent } from './component/list-provider/list-provider.component';
 import { AgregarProveedoresComponent } from './pages/agregar-proveedores/agregar-proveedores.component';
 import { FormProviderComponent } from './component/form-provider/form-provider.component';
-import { ProductComponent } from './pdf/product/product.component';
 import { ExistenciasComponent } from './components/existencias/existencias.component';
-import { ExistlistComponent } from './components/existlist/existlist.component';
+import { ExistlistComponent } from './components/existencias/existlist/existlist.component'
 import { CategoryComponent } from './pages/category/category.component';
 import { CategoryaddComponent } from './pages/categoryadd/categoryadd.component';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
@@ -45,10 +43,10 @@ import { NotaDEntregaComponent } from './pages/generarfacturas/PDFNota/nota-d-en
 import { HistoryComponent } from './components/dialog/history/history.component';
 import { HistoryVentasDialogComponent } from './components/dialog/history-ventas-dialog/history-ventas-dialog.component'
 import { UpdatePendComponent } from './components/dialog/update-pend/update-pend.component'
-
 import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { UpdatePreComponent } from './components/dialog/update-presupuest-product/update-pre/update-pre.component' 
 import { GenerarfacturasComponent } from './pages/generarfacturas/generarfacturas.component';
-
+import { ConfirmDialogComponent } from './components/dialog/confirm-dialog/confirm-dialog.component';
 import { PreviewFacturaComponent } from './pages/Generarfacturas/preview-factura/preview-factura.component';
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
@@ -60,6 +58,8 @@ import { HistoryUserComponent } from './components/history-user/history-user.com
 import { ExcelFormatsService } from './services/exportExcel/excel-formats.service';
 import { ExportExcelComponent } from './components/export-excel/export-excel.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OrderModule } from 'ngx-order-pipe';
+import { ConvertBsPipe } from './pipes/bsPipes/convert-bs.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +67,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HistoryUserComponent,
     HistoryVentasComponent,
     AppComponent,
+    UpdatePreComponent,
+    ConfirmDialogComponent,
     HistoryComponent,
     NavigateComponent,
     FormProductComponent,
@@ -84,12 +86,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     ListProviderComponent,
     AgregarProveedoresComponent,
     FormProviderComponent,
-    ProductComponent,
     ExistenciasComponent,
     ExistlistComponent,
     CategoryComponent,
     CategoryaddComponent,
     FilterProductPipe,
+    ConvertBsPipe,
     CategoryPipe,
     PresupuestoComponent,
     LisproductPreComponent,
@@ -108,6 +110,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UpdatePendComponent,
   ],
   imports: [
+    OrderModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
@@ -116,22 +119,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
-    SweetAlert2Module.forRoot({
-      buttonsStyling: false,
-      customClass: 'modal-content',
-      confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn'
-  })
   ],
   providers: [
     ProductService,
     ExcelFormatsService
   ],
   entryComponents: [
+    ConfirmDialogComponent,
+
     HistoryComponent,
     HistoryVentasComponent,
     HistoryVentasDialogComponent,
-    UpdatePendComponent
+    UpdatePendComponent,
+    UpdatePreComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,63 @@
+<div class="sidebar" data-color="purple" data-background-color="black" data-image="./assets/img/wall.jpg">
+  <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+    Tip 2: you can also add an image using data-image tag
+-->
+  <div class="logo animated slideInLeft delay-1s">
+    <img src="./assets/img/logo.png" class="img-logo" alt="">
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="nav-item active animated fadeIn">
+        <a class="nav-link" [routerLink]="['/inicio']" routerLinkActive="router-link-active"  >
+          <i class="material-icons">dashboard</i>
+          <p>Inicio</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn ">
+        <a class="nav-link" [routerLink]="['/productos']" routerLinkActive="router-link-active">
+          <i class="material-icons">assignment</i>
+          <p>Productos</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn ">
+        <a class="nav-link" [routerLink]="['/categorias']" routerLinkActive="router-link-active">
+          <i class="material-icons">format_list_numbered</i>
+          <p>Categorias</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe' || position == 'empleado'">
+        <a class="nav-link" [routerLink]="['/clientes']" routerLinkActive="router-link-active" >
+          <i class="material-icons">person</i>
+          <p>Clientes</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe' || position == 'empleado'">
+        <a class="nav-link" [routerLink]="['/proveedores']" routerLinkActive="router-link-active">
+          <i class="material-icons">supervisor_account</i>
+          <p>Proveedores</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe'">
+        <a class="nav-link" [routerLink]="['/empleados']" routerLinkActive="router-link-active">
+          <i class="material-icons">wc</i>
+          <p>Empleados</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe' || position == 'empleado'">
+        <a class="nav-link" [routerLink]="['/presupuestos']" routerLinkActive="router-link-active">
+          <i class="material-icons">event_note</i>
+          <p>Presupesto</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn">
+        <a class="nav-link" [routerLink]="['/ventas-pendientes']" routerLinkActive="router-link-active">
+          <i class="material-icons">info</i>
+          <p *ngIf="position != 'jefe'">Ventas pendientes</p>
+          <p *ngIf="position == 'jefe'" matBadge="{{pendJe}}" matBadgeOverlap="false"><small>Ventas pendientes & historial</small></p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

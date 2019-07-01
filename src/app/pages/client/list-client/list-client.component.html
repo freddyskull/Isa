@@ -1,0 +1,50 @@
+    <div class="text-center m-5">
+      <a routerLink="/clientes/agregar" ><p class="add">AGREGAR NUEVO CLIENTE</p> </a>
+    </div>
+    <div class="text-center m-5">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Buscar cliente..." name="filter" [(ngModel)]="filter">
+      </div> 
+    </div>
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let cli of cliente | filterProduct:filter">
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <img class="img" src='./assets/img/clientes.jpg' /> 
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category">
+                    {{cli.cedula}}
+                    <br>
+                    {{cli.email}}
+                  </h6>
+                  <h4 class="card-title"   *ngIf="cli.vendedor != ''">{{cli.name}} | Vendedor: "{{cli.vendedor}}"</h4>
+                  <h4 class="card-title"   *ngIf="cli.vendedor == ''">{{cli.name}}</h4>
+                  <div class="row mt-2">
+                    <div class="col-md-6">
+                      Teléfono: {{cli.tel}}
+                    </div>
+                    <div class="col-md-6">
+                      Dirección 2: {{cli.direccion2}}
+                    </div>
+                  </div>
+                  <div class="row m-4">
+                    <div class="col-md-12">
+                        Dirección: {{cli.direccion}}
+                    </div>
+                    <div class="col-md-12" *ngIf="cli.courrier != ''">
+                      Dirección de envios: {{cli.courrier}}
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                      <a class="btn btn-warning btn-round mr-4" [routerLink]="['/clientes/editar/',cli.id]" routerLinkActive="router-link-active"><i class="material-icons">create</i></a>
+                      <a  class="btn btn-danger btn-round" (click)="deleteClient(cli.id)"><i class="material-icons">delete</i></a>
+                  </div>
+                </div>
+            </div>  
+          </div>
+      </div>
+    </div>
+
+    

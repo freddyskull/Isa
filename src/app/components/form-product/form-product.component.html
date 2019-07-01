@@ -22,7 +22,6 @@
       </div>
     </div>
   </div>
-  
     <div class="content mt-5 animated fadeIn" *ngIf="currency != 0">
         <div class="container-fluid">
           <div class="row">
@@ -45,7 +44,7 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Precio de venta Ej: 10.000 BS o 10.00 USD" autocomplete="off"  name="priceB" [(ngModel)]="product.priceB" required>
+                            <input matInput placeholder="Precio de venta Ej: 10.000 BS o 10.00 USD" autocomplete="off"  name="priceB" [(ngModel)]="product.priceB">
                           </mat-form-field>
                         </div>
                       </div>
@@ -130,12 +129,13 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <mat-form-field class="example-full-width">
-                            <input matInput autocomplete="off" placeholder="Imagen de internet (opcional fines estéticos)" name="description" [(ngModel)]="product.description">
+                            <input matInput autocomplete="off" placeholder="Agregar descripción del producto" name="description" [(ngModel)]="product.description">
                           </mat-form-field>
                         </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary  mt-5" >Agregar nuevo producto</button>
+                    <button class="btn btn-warning ml-2  mt-5" (click)="currency = 0" >Escoger divisa</button>
                     <mat-slide-toggle class="ml-2 mt-4 iva" name="iva" [(ngModel)]="product.iva" >IVA</mat-slide-toggle>
                     <div class="clearfix"></div>
                   </form>
@@ -145,7 +145,7 @@
             <div class="col-md-4 animated fadeInRight" *ngIf="currency == 1">
               <div class="card card-profile">
                 <div class="card-avatar">
-                  <img class="img" [src]="product.img == '' || '' ? './assets/img/no-product.png' : product.img" />
+                    <img class="img" [src]="product.img == '' ? './assets/img/no-product.png' : product.img" />
                 </div>
                 <div class="card-body">
                     <h6 class="card-category"> Marca {{product.marca}}  </h6>
@@ -195,14 +195,14 @@
               </div>
               <div class="container animated fadeIn" *ngIf="bad">
                 <div class="alert alert-primary mt-5" role="alert">
-                  Debes completar al menos nombre, precio de compra, precio de venta, precio de venta al mayor cantidad, y quien esta recibiendo el producto.
+                  {{error}}
                 </div>
               </div>
             </div>
             <div class="col-md-4 animated fadeInRight" *ngIf="currency == 2">
               <div class="card card-profile">
                 <div class="card-avatar">
-                  <img class="img" [src]="product.img == '' || '' ? './assets/img/no-product.png' : product.img" />
+                    <img class="img" [src]="product.img == '' ? './assets/img/no-product.png' : product.img" />
                 </div>
                 <div class="card-body">
                     <h6 class="card-category"> Marca {{product.marca}} </h6>
@@ -247,7 +247,7 @@
               </div>
               <div class="container animated fadeIn" *ngIf="bad">
                 <div class="alert alert-primary mt-5" role="alert">
-                  Debes completar al menos nombre, precio de compra, precio de venta, precio de venta al mayor cantidad, y quien esta recibiendo el producto.
+                 {{error}}
                 </div>
               </div>
             </div>

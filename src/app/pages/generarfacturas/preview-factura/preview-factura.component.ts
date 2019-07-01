@@ -83,16 +83,17 @@ getPresu(){
     for(let i = 0; i < ult; i++){
        if(this.serv.getPresupuestos()[i].iva == true){
         j += this.serv.getPresupuestos()[i].price * 0.16
-        j += (this.serv.getPresupuestos()[i].price2 * this.usdValor) * 0.16
+        // j += (this.serv.getPresupuestos()[i].price2 * this.usdValor) * 0.16
        }
     }
     return j;
   }
   obtenerTotalSinIva(){
+    // console.log("total sin iva")
     var j = 0;
     var ult = Object.keys(this.serv.getPresupuestos()).length;
     for(let i = 0; i < ult; i++){
-      if(this.serv.getPresupuestos()[i].iva == null){
+      if(this.serv.getPresupuestos()[i].iva == undefined || this.serv.getPresupuestos()[i].iva == false){
         j += this.serv.getPresupuestos()[i].price
        }
     }

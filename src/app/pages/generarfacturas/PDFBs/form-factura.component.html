@@ -12,12 +12,12 @@
         <td>{{item.stock}}</td>
         <td>{{item.name}}</td>
         <ng-template [ngIf]="tipoDV == true">
-                <td>{{item.price3 | number}}</td>
-                <td>{{item.price  | number}}</td>
+                <td>{{((item.price3) | convertBs )}}</td>
+                <td>{{(item.price)   | convertBs }}</td>
         </ng-template>
         <ng-template [ngIf]="tipoDV == false">
-                <td>{{item.price3 * 1.10 | number}}</td>
-                <td>{{item.price  * 1.10 | number}}</td>
+                <td>{{(item.price3 * 1.10) | convertBs }}</td>
+                <td>{{(item.price  * 1.10) | convertBs }}</td>
         </ng-template>
         </tr>
     </tbody>
@@ -47,8 +47,8 @@
     </tbody>
 </table>
 
-<button type="submit" class="btn btn-primary  mt-5" value="CPTURE" (click)="facTipoLib()">generar comprobante</button>
-<button type="submit" class="btn btn-danger mt-5 ml-2" value="CPTURE" (click)="captureScreen()"> PDF</button>
+<button type="submit" class="btn btn-primary  mt-5" value="CPTURE" *ngIf="pre.length < 15" (click)="condicVal(option == true)">generar comprobante</button>
+<button type="submit" class="btn btn-danger mt-5 ml-2" value="CPTURE" (click)="condicVal(option == false)"> PDF</button>
 <div class="alert alert-danger animated fadeIn" role="alert" *ngIf="errorForm">
     Error en el formulario, al parecer se encuentra vacio o los campos necesarios no están llenos
 </div>

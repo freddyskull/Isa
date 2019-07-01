@@ -39,9 +39,11 @@
       </app-lisproduct-pre>
     </div>
     <div class="col-md-5">
-      <app-add-pre [aux3]="aux3"
+      <app-add-pre 
+      [aux3]="aux3"
       (presu)="presuCurrency($event)"
-      (presuArr)="presupuest($event)"
+      (facturar)="presupuest($event)"
+      (presuArr)="getInfo($event)"
       ></app-add-pre>
     </div>
   </div>
@@ -73,14 +75,16 @@
       <tr>
           <td>{{item.stock}}</td>
           <td>{{item.name}}</td>
-          <td *ngIf="variablesPresu.venta == true">{{item.price3        | number}}</td>
-          <td *ngIf="variablesPresu.venta == true">{{item.price         | number}}</td>
-          <td *ngIf="variablesPresu.venta != true">{{item.price3 * 1.10 | number}}</td>
-          <td *ngIf="variablesPresu.venta != true">{{item.price  * 1.10 | number}}</td>
+          <td *ngIf="variablesPresu.venta == true">{{item.price3        | convertBs }}</td>
+          <td *ngIf="variablesPresu.venta == true">{{item.price         | convertBs }}</td>
+          <td *ngIf="variablesPresu.venta != true">{{item.price3 * 1.10 | convertBs }}</td>
+          <td *ngIf="variablesPresu.venta != true">{{item.price  * 1.10 | convertBs }}</td>
       </tr>
     </tbody>
   </table>
 </div>
+
+{{variablesPresu.venta}}
 
 <div *ngIf="currency == 'Usd'">
     <table class="tablee2" id="contentToConvert">

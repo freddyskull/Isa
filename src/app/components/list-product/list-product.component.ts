@@ -2,6 +2,10 @@ import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import * as jspdf from 'jspdf';   
 import html2canvas from 'html2canvas'; 
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component'
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-list-product',
   templateUrl: './list-product.component.html',
@@ -27,7 +31,11 @@ export class ListProductComponent implements OnInit {
   dateDay = new Date();
   position:string = "";
   permiss: number;
-  constructor(private serv: ProductService) { }
+  order: string = 'name';
+  reverse: boolean = false;
+
+
+  constructor(private serv: ProductService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
   
 
 
@@ -39,6 +47,16 @@ export class ListProductComponent implements OnInit {
     this.getArrExcel()
   }
 
+  
+
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    return false;
+  }
 
   getArrExcel(){
    let Usd = 0
@@ -157,5 +175,33 @@ export class ListProductComponent implements OnInit {
       doc.addImage(contentDataURL, 'PNG', 5, 32, imgWidth, imgHeight)  
       doc.save(`Lista de precios dia ${this.fecha()}.pdf`); // Generated PDF   
     });  
-  }  
+  } 
+  
+  
+  openDialog(item) {
+    let name = localStorage.getItem('name')
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {name: `Hola ${name}` }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result == false){
+        this.delete(item)
+        this.openSnackBar('El producto fué eliminado satisfactoriamente', 'Entendido')
+      }else{
+        this.openSnackBar('El producto no será borrado', 'Ok')
+      }
+    });
+    
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+    });
+  }
+
 }

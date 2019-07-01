@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Hola {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Introduzca la razón por la cuál esta compra queda pendiente</p>
+  <mat-form-field class="example-full-width">
+    <input matInput #message maxlength="256" placeholder="Explicación" [(ngModel)]="data.description">
+    <mat-hint align="start"><strong>Sea coherente</strong> </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" >Olvidalo</button>
+  <button mat-button [mat-dialog-close]="data.description" cdkFocusInitial>Ok</button>
+</div>

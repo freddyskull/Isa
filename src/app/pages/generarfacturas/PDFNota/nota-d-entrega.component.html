@@ -12,12 +12,12 @@
         <td>{{item.stock}}</td>
         <td>{{item.name}}</td>
         <ng-template [ngIf]="tipoDV == true">
-                <td>{{item.price3 | number}}</td>
-                <td>{{item.price  | number}}</td>
+                <td>{{(item.price3)  | convertBs }}</td>
+                <td>{{(item.price)   | convertBs }}</td>
         </ng-template>
         <ng-template [ngIf]="tipoDV == false">
-                <td>{{item.price3 * 1.10 | number}}</td>
-                <td>{{item.price  * 1.10 | number}}</td>
+                <td>{{(item.price3 * 1.10)  | convertBs}}</td>
+                <td>{{(item.price  * 1.10)  | convertBs}}</td>
         </ng-template>
         </tr>
     </tbody>

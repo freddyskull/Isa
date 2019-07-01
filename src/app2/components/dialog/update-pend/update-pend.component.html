@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Hola {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Introduzca los datos pertinentes a la venta de este producto ejmplo: banco número de transferencia y monto total en caso de que la venta ya esté pagada, en caso de que no, especifique por que aúno no ha sido pagada</p>
+  <div class="example-container">
+    <mat-form-field>
+      <textarea matInput placeholder="Datos de venta" #message placeholder="Explicación" [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+  </div>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" >Olvidalo</button>
+  <button mat-button [mat-dialog-close]="data.description" cdkFocusInitial>Ok</button>
+</div>

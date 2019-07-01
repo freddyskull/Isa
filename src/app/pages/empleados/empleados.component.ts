@@ -11,6 +11,7 @@ export class EmpleadosComponent implements OnInit {
   constructor(private serv: ProductService) { }
   users: any = [];
   userName: string;
+  filter:string = ""
   ngOnInit() {
     this.getP()
     this.getuserData()

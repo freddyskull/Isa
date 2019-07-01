@@ -25,12 +25,13 @@ export class HermanoComponent implements OnInit {
   @Output() volver = new EventEmitter<boolean>();
   usdValor:number = 0;
   // restar es la variable que se le debe restar al stock
-  restar: number = 0;
+  restar: number = 1;
   //presupuesto total es el array que contiene todo lo que se agrega al presupuesto
   presupuestoTotal: any = [];
 
   ngOnInit() {
     this.getUSD();
+    console.log(this.pr)
   }
 
   getUSD(){
@@ -43,7 +44,7 @@ export class HermanoComponent implements OnInit {
 //funcion que devuelve las variables para hacer cambios en que hacen desaparecer en el html
   back(){
     this.volver.emit(true)
-    this.restar = 0;
+    this.restar = 1;
   }
   //esta función es la que agrega en general todas las peticiones
   add(canti:NgForm,nam:string,restar:number,Usd:number,bs:number,id:number,bs$:number,Usd$:number,iva:number){
@@ -112,7 +113,7 @@ export class HermanoComponent implements OnInit {
       this.presupuestoTotal = this.serv.getPresupuestos();
       this.pr = [];
       this.stock = 0;
-      this.restar = 0;
+      this.restar = 1;
       this.aux = false;
       this.show = true
       this.enviar.emit(this.pro);
@@ -132,7 +133,6 @@ export class HermanoComponent implements OnInit {
       var UsdT = 0;
       var priBs = 0;
       var priUs = 0; 
-        console.log("agregado al almacén con dolares")
         bsT = bs$*restar * Usd;
         UsdT = bs$*restar;
         priBs =  bsT / restar;
@@ -161,11 +161,10 @@ export class HermanoComponent implements OnInit {
         img: this.pr.img,
         iva:  iv   
        })
-       console.log(this.serv.getPresupuestos())
       this.presupuestoTotal = this.serv.getPresupuestos();
       this.pr = [];
       this.stock = 0;
-      this.restar = 0;
+      this.restar = 1;
       this.aux = false;
       this.show = true
       this.enviar.emit(this.pro);

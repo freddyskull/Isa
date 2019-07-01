@@ -1,0 +1,416 @@
+body {
+  font-size: 4px;
+}
+.img-logo{
+  position: relative;
+  width: 100px;
+  height: 50px;
+  bottom:1rem;
+  transition: 1s all;
+}
+.img-logo:hover{
+  box-shadow: 0px 20px 38px -4px rgba(125,40,125,0.65);
+}
+.btn-outline,
+.btn-outline:hover {
+  border-color: currentcolor;
+}
+nav{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.btn-outline {
+  border-radius: var(--border-radius);
+}
+
+.btn-outline:hover {
+  box-shadow: inset 0 0 0 20rem var(--darken-1);
+}
+
+.btn-outline:active {
+  box-shadow: inset 0 0 0 20rem var(--darken-2),
+    inset 0 3px 4px 0 var(--darken-3),
+    0 0 1px var(--darken-2);
+}
+
+.btn-outline:disabled,
+.btn-outline.is-disabled {
+  opacity: .5;
+}
+
+.navire {
+  
+  background-size: 100% auto;
+  width: 120px;
+  height: 100px;
+  position: absolute;
+  top: -50px;
+  right: -130px;
+  -webkit-transition: right 0.2s ease;
+  transition: right 0.2s ease;
+}
+
+.mainMenuOverlay {
+  &.open {
+    .navire {
+      right: 70%;
+      -webkit-transition: right 28s ease 1s;
+      transition: right 28s ease 1s;
+    }
+    bottom: 0;
+  }
+  background-color: rgba(82, 11, 88, 0.84);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -420px;
+  z-index: 999;
+  height: 420px;
+  box-shadow: 0 0 15px -3px #03374A;
+  border-radius: 100% 100% 0 0 / 14% 14% 0 0;
+  -webkit-transition: bottom 0.5s ease;
+  transition: bottom 0.5s ease;
+  .toggleMenu {
+    display: block;
+    /*background: url(https://res.cloudinary.com/dioieuprs/image/upload/v1466688705/floating-menu/sandwich.png) no-repeat center center #65B5D0;background-size: 23px auto;*/
+    background-color: rgb(100, 15, 83);
+    border: 1px solid #FFF;
+    border-radius: 80px;
+    width: 62px;
+    height: 62px;
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    margin: -31px 0 0 -31px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #FFF;
+    text-align: center;
+    line-height: 62px;
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2) inset, 0 0 16px -4px #063343;
+    -webkit-transition: box-shadow 0.5s ease, top 0.5s ease;
+    transition: box-shadow 0.5s ease, top 0.5s ease;
+    &:hover, &:active {
+      box-shadow: 0px 0px 83px -1px rgb(224, 60, 224);
+    }
+  }
+  &.open .toggleMenu {
+    top: 50%;
+    background-color: rgb(160, 20, 137);
+  }
+  .itemMenuBox {
+    background: url(https://res.cloudinary.com/dioieuprs/image/upload/v1466688705/floating-menu/go2.png) no-repeat center center;
+    background-size: 28px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -31px 0 0 -31px;
+    height: 62px;
+    width: 142px;
+    text-align: right;
+    border-radius: 40px;
+    -webkit-transform-origin: 31px 31px;
+    -ms-transform-origin: 31px 31px;
+    transform-origin: 31px 31px;
+    -webkit-transition: all 1s ease 0.4s;
+    transition: all 1s ease 0.4s;
+  }
+  &.open .itemMenuBox {
+    width: 182px;
+    -webkit-transition: all 1s ease 0s;
+    transition: all 1s ease 0s;
+  }
+  .itemMenuBox {
+    &.bills {
+      -webkit-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+    }
+    &.tarsheed {
+      -webkit-transform: rotate(330deg);
+      -ms-transform: rotate(330deg);
+      transform: rotate(330deg);
+    }
+    &.employees {
+      -webkit-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
+      transform: rotate(30deg);
+    }
+    &.location {
+      -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+    &.eservices {
+      -webkit-transform: rotate(150deg);
+      -ms-transform: rotate(150deg);
+      transform: rotate(150deg);
+    }
+    &.contact {
+      -webkit-transform: rotate(210deg);
+      -ms-transform: rotate(210deg);
+      transform: rotate(210deg);
+    }
+    .itemMenu {
+      display: inline-block;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      background-color: #924399;
+      background-repeat: no-repeat;
+      background-position: center center;
+      width: 62px;
+      height: 62px;
+      border-radius: 40px;
+      transition: all 0.8s ease;
+      color: #FFF;
+      font-size: 28px;
+      line-height: 64px;
+      text-align: center;
+    }
+    &.bills .itemMenu {
+      
+      background-size: 40px auto;
+      -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+    &.tarsheed .itemMenu {
+     
+      -webkit-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
+      transform: rotate(30deg);
+    }
+    &.employees .itemMenu {
+     
+      -webkit-transform: rotate(330deg);
+      -ms-transform: rotate(330deg);
+      transform: rotate(330deg);
+    }
+    &.location .itemMenu {
+   
+      -webkit-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+    }
+    &.eservices .itemMenu {
+     
+      -webkit-transform: rotate(210deg);
+      -ms-transform: rotate(210deg);
+      transform: rotate(210deg);
+    }
+    &.contact .itemMenu {
+      -webkit-transform: rotate(150deg);
+      -ms-transform: rotate(150deg);
+      transform: rotate(150deg);
+    }
+    &.bills .itemMenu:hover {
+      -webkit-transform: rotate(450deg);
+      -ms-transform: rotate(450deg);
+      transform: rotate(450deg);
+    }
+    &.tarsheed .itemMenu:hover {
+      -webkit-transform: rotate(390deg);
+      -ms-transform: rotate(390deg);
+      transform: rotate(390deg);
+    }
+    &.employees .itemMenu:hover {
+      -webkit-transform: rotate(690deg);
+      -ms-transform: rotate(690deg);
+      transform: rotate(690deg);
+    }
+    &.location .itemMenu:hover {
+      -webkit-transform: rotate(630deg);
+      -ms-transform: rotate(630deg);
+      transform: rotate(630deg);
+    }
+    &.eservices .itemMenu:hover {
+      -webkit-transform: rotate(570deg);
+      -ms-transform: rotate(570deg);
+      transform: rotate(570deg);
+    }
+    &.contact .itemMenu:hover {
+      -webkit-transform: rotate(510deg);
+      -ms-transform: rotate(510deg);
+      transform: rotate(510deg);
+    }
+  }
+}
+
+/* ### main Menu Overlay */
+
+/* Hover */
+
+.floating {
+  -webkit-animation-name: Floatingx;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-name: Floating;
+  -moz-animation-duration: 3s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes Floatingx {
+  from {
+    -webkit-transform: translate(0, 0px);
+  }
+
+  65% {
+    -webkit-transform: translate(0, 5px);
+  }
+
+  to {
+    -webkit-transform: translate(0, 0px);
+  }
+}
+
+
+@-moz-keyframes Floating {
+  from {
+    -moz-transform: translate(0, 0px);
+  }
+
+  65% {
+    -moz-transform: translate(0, 5px);
+  }
+
+  to {
+    -moz-transform: translate(0, 0px);
+  }
+}
+
+
+.floating2 {
+  -webkit-animation-name: Floatingx2;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-name: Floating2;
+  -moz-animation-duration: 3s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes Floatingx2 {
+  from {
+    -webkit-transform: translate(0, 0px);
+  }
+
+  45% {
+    -webkit-transform: translate(0, 8px);
+  }
+
+  to {
+    -webkit-transform: translate(0, 0px);
+  }
+}
+
+
+@-moz-keyframes Floating2 {
+  from {
+    -moz-transform: translate(0, 0px);
+  }
+
+  45% {
+    -moz-transform: translate(0, 8px);
+  }
+
+  to {
+    -moz-transform: translate(0, 0px);
+  }
+}
+
+
+.floating3 {
+  -webkit-animation-name: Floatingx3;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-name: Floating3;
+  -moz-animation-duration: 3s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes Floatingx3 {
+  from {
+    -webkit-transform: translate(0, 0px);
+  }
+
+  50% {
+    -webkit-transform: translate(2px, 4px);
+  }
+
+  to {
+    -webkit-transform: translate(0, 0px);
+  }
+}
+
+
+@-moz-keyframes Floating3 {
+  from {
+    -moz-transform: translate(0, 0px);
+  }
+
+  50% {
+    -moz-transform: translate(2px, 4px);
+  }
+
+  to {
+    -moz-transform: translate(0, 0px);
+  }
+}
+
+
+/* signature */
+
+.signatureBox {
+  text-align: right;
+  padding: 4px;
+  &.fixed {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+  }
+}
+
+.signature {
+  color: #484848;
+  a {
+    color: #484848;
+  }
+  &:before, &:after {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    -webkit-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    width: 11px;
+  }
+  &:before {
+    content: 'Mahmoud';
+  }
+  &:after {
+    content: 'NBET';
+    margin-left: 0px;
+    width: 10px;
+  }
+  &:hover {
+    color: #484848;
+    &:before {
+      width: 76px;
+    }
+    &:after {
+      width: 34px;
+      margin-left: 3px;
+    }
+  }
+}
+
+
+.material-icons{
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}

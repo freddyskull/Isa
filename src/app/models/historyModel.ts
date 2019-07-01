@@ -2,7 +2,7 @@ export interface history{
     id?: number;
     nameVend?: string;
     total?: number;
-    date?: string;
+    date?: Date;
     compraD?: string;
     estado?: number;
     observa?: string;

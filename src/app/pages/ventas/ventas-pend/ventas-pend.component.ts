@@ -37,10 +37,9 @@ export class VentasPendComponent implements OnInit {
 
 
   converTo(){  
-    this.serv.getDolar().subscribe(
-      req =>{
-        this.us = req;
-        this.Usd += this.us.USD.dolartoday;
+    this.serv.getUsdValor().subscribe(
+      req => {
+        this.Usd = Object.values(req)[0].priceUSD
       }
     )
   }
@@ -68,7 +67,7 @@ export class VentasPendComponent implements OnInit {
         let j = 0;
         let ult = Object.keys(req).length
         for(let i = 0; i < ult; i++){
-          if(this.name == req[i].vendedor){
+          if(this.name == req[i].encargado || this.name == req[i].vendedor){
             this.pendientesUs[j] = req[i]
             j++
           }
@@ -79,7 +78,6 @@ export class VentasPendComponent implements OnInit {
 
 
   updatePend(id,estado,origen){
-    this.getporduc()
     this.getPendUs()
     this.getPendJe()
     estado =! estado
@@ -124,11 +122,14 @@ export class VentasPendComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.description = result;
-      console.log(this.description)
-      //luego de que el modal sea llenado se hace un callback a la función que procede a actualizar los campos de historial de ventas y la venta pendiente
-      this.updatePend(id,estado,origen)
       if(result == undefined){
-        this.pendientesJe.estado = true;
+        console.log("olvidalo wey");
+        this.getPendUs()
+        this.getPendJe()
+      }else{
+        this.updatePend(id,estado,origen)
+        this.getPendUs()
+        this.getPendJe()
       }
     });
   }

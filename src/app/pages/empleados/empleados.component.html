@@ -8,14 +8,24 @@
   <div class="text-center m-5 animated fadeIn">
       <a routerLink="/empleados/agregar" ><p class="add">AGREGAR NUEVO PERSONAL</p> </a>
   </div>
+  <div class="text-center m-5">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Buscar empleado..." name="filter" [(ngModel)]="filter">
+    </div> 
+  </div>
   <div class="container-fluid mt-5">
     <div class="row">
-      <div class="col-md-4" *ngFor="let item of users">
+      <div class="col-md-4" *ngFor="let item of users | filterProduct:filter">
         <div class="card card-profile">
           <div class="card-avatar">
-              <img  src="./assets/img/jefe.png" *ngIf="item.position == 'jefe'"/>
-              <img  src="./assets/img/vendedor.png" *ngIf="item.position == 'vendedor'">
-              <img  src="./assets/img/empleado.png" *ngIf="item.position == 'empleado'">
+            <ng-container *ngIf="item.img != ''; else elseTemplate">
+              <img class="img" [src]="item.img" />
+            </ng-container>
+            <ng-template #elseTemplate>
+              <img  src="./assets/img/jefe.png"       *ngIf="item.position == 'jefe'"/>
+              <img  src="./assets/img/vendedor.png"   *ngIf="item.position == 'vendedor'">
+              <img  src="./assets/img/empleado.png"   *ngIf="item.position == 'empleado'">
+            </ng-template>
           </div>
           <div class="card-body">
             <h6 class="card-category"> {{item.position}} </h6>

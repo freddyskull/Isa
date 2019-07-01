@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Editar cantidad es del producto {{product.name}} </h1>
+<div mat-dialog-content>
+  <p>Introduzca la cantidad de productos que será utilizada cantidad actual: {{product.stock - restar}}</p>
+  <mat-form-field>
+    <input type="number" min="1" max="data.cant" matInput [(ngModel)]="restar">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Olvidalo</button>
+  <button mat-button (click)="editPresu()" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,28 @@
+<div class="row mt-4">
+  <div class="card">
+      <div class="card-header card-header-danger">
+          <h4 class="card-title ">Productos con poca existencia</h4>
+          <p class="card-category"> aqui se encuentra los productos con menos de 5 unidades dentro del inventario</p>
+      </div>
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <th>Nombre</th>
+                      <th>Cantidad</th>
+                      <th>Encargado de recibir este producto</th>
+                      <th>Fecha de introducción al almacén</th>
+                  </thead>
+                  <tbody  *ngFor="let item of objE">
+                      <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.stock}}</td>
+                        <td>{{item.recibo}}</td>
+                        <td>{{item.create_at | date }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

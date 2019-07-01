@@ -1,0 +1,70 @@
+<body class="dark-edition animated fadeIn">
+  
+<app-navigate></app-navigate>
+<div class="ml-5 mb-4">
+    <nav class="nav-component">
+      <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio /</a>  <a [routerLink]="['/categorias']" routerLinkActive="router-link-active" > Lista Categorías / </a>  <a [routerLink]="['/categorias/agregar']" routerLinkActive="router-link-active" > Agregar Categorías /</a>  <a [routerLink]="['/productos']" routerLinkActive="router-link-active" > Productos</a> 
+    </nav>
+  </div>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-8 col-sm-12 ">
+          <div class="alert alert-primary" role="alert" *ngIf="good">
+              This is a primary alert—check it out!
+          </div>
+          <div class="alert alert-primary" role="alert" *ngIf="bad">
+              This is a primary alert—check it out!
+          </div>
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Agregar nueva categoria</h4>
+              <p class="card-category">Completa los datos requerido</p>
+            </div>
+            <div class="card-body">
+              <form #form="ngForm" class="form">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Nombre</label>
+                      <input type="text" autocomplete="off" class="form-control" name="name"  [(ngModel)]="cat.name" >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Descripción</label>
+                      <input type="text" autocomplete="off" class="form-control" name="description"  [(ngModel)]="cat.description" >
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary  mt-5" (click)="edit ? updateCat() : saveCat()">Agregar nueva categoria</button>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 animated fadeInRight">
+            <div class="card card-profile">
+              <div class="card-avatar">
+                <div class="img">
+                  <span>{{cat.id}}</span>  
+                </div>
+              </div>
+              <div class="card-body">
+                  <h6 class="card-category"> Categoria ID: {{cat.id}} </h6>
+                  <div class="card-title">
+                   <h3>{{cat.name}}</h3> 
+                   <p class="text-align-left">{{cat.description}}</p>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                      <a class="btn btn-warning btn-round mr-2"><i class="material-icons">create</i></a>
+                      <a class="btn btn-info btn-round mr-2"><i class="material-icons">search</i></a>
+                      <a class="btn btn-danger btn-round mr-2"><i class="material-icons">delete</i></a>
+                  </div>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+</body>

@@ -1,0 +1,31 @@
+<div mat-dialog-title class="text-center">
+  <h4>Datos de la venta de {{dataVentas.nameVend}} del {{dataVentas.date}}</h4>
+</div>
+<div mat-dialog-content>
+  <table class="table">
+    <thead>
+      <th>Total pagado</th>
+      <th>Total de iva impuesto</th>
+      <th>Divisa</th>
+      <th>Estado</th>
+    </thead>
+    <tbody *ngIf="dataVentas.tipo == 'Bs'">
+      <td>{{dataVentas.total    | number}}</td>
+      <td>{{dataVentas.totIva   | number}}</td>
+      <td>{{dataVentas.tipo}}</td>
+      <td *ngIf="dataVentas.estado == 0" class="text-success">Pagado</td>
+      <td *ngIf="dataVentas.estado == 1" class="text-danger"> Pendiente</td>
+    </tbody>
+    <tbody *ngIf="dataVentas.tipo == 'Usd'">
+      <td>{{dataVentas.total    | currency}}</td>
+      <td>No aplica</td>
+      <td>{{dataVentas.tipo}}</td>
+      <td *ngIf="dataVentas.estado == 0" class="text-success">Pagado</td>
+      <td *ngIf="dataVentas.estado == 1" class="text-danger"> Pendiente</td>
+    </tbody>
+  </table>
+  <p>Observación: {{dataVentas.observa}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Ok</button>
+</div>

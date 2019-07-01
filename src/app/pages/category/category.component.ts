@@ -1,9 +1,11 @@
 import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
-
+import { ExcelFormatsService } from '../../services/exportExcel/excel-formats.service'
 import { ProductService } from '../../services/product.service';
 import * as jspdf from 'jspdf';   
 import html2canvas from 'html2canvas'; 
-
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/dialog/confirm-dialog/confirm-dialog.component'
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -19,12 +21,27 @@ export class CategoryComponent implements OnInit {
   Usd: number = 0;
   us:any = [];
   arrayExcel: any = []
-  constructor(private serv: ProductService) { }
+  position: string = ""
+  idCat:number;
+  filter:string = '';
+  excell:boolean = true;
+  order: string = 'name';
+  reverse: boolean = false;
+  catName: string = ''
+  constructor(private serv: ProductService,private excel: ExcelFormatsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getCategory()
     this.GetUsd()
-    this.getArrExcel()
+    this.position = localStorage.getItem("position")
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    return false;
   }
 
   fecha(){
@@ -48,13 +65,22 @@ export class CategoryComponent implements OnInit {
       }
     )
   }
-  GetUsd(){  
-    this.serv.getDolar().subscribe(
-      req =>{
-        this.us = req;
-        this.Usd += this.us.USD.dolartoday;
-      }
+
+  deleteProduct (id: string){
+    this.serv.deleteProduct(id).subscribe(
+      req  => {
+        this.getCat(this.idCat)
+      },
+      err => console.error(err)
     )
+    return false;
+  }
+
+  GetUsd(){  
+  this.serv.getUsdValor().subscribe(
+    req => {
+      this.Usd = Object.values(req)[0].priceUSD;
+    })
   }
   getCat(id){
     this.search = []
@@ -73,8 +99,8 @@ export class CategoryComponent implements OnInit {
        }
     )
   }
-  
-  getArrExcel(){
+  //funcion que transforma los valores para poderlos convertir a un array y volverlo a un formato excel
+  getArrExcelBs(id){
     let Usd = 0
      this.serv.getDolar().subscribe(
        req =>{
@@ -82,41 +108,117 @@ export class CategoryComponent implements OnInit {
          Usd += this.us.USD.dolartoday;
      this.serv.getProducts().subscribe(
        res => {
-        let j = 0;
+        let j = 1;
         var ult = Object.keys(res).length
         for(let i = 0; i < ult; i++){
-         if(res[i].priceS$ == 0){
+         if(res[i].priceS$ == 0 && id == res[i].category){
            this.arrayExcel[j] = { 
              Nombre:res[i].name,
              Cantidad:res[i].stock,
-             PrecioBs:res[i].priceS.toLocaleString(),
-             PrecioUSD:(res[i].priceS / Usd).toFixed(2),
-             Promoción:res[i].pricePro,
+             PrecioBs:Math.round(res[i].priceS),
              FechaV:res[i].fecven,
              Marca:res[i].marca,
-             Procedencia:res[i].marca2
            }
-         }else{
+         }if(res[i].priceS$ > 0 && id == res[i].category){
            this.arrayExcel[j] = { 
              Nombre:res[i].name,
              Cantidad:res[i].stock,
-             PrecioBs:(res[i].priceS$ * Usd).toLocaleString(),
-             PrecioUSD:res[i].priceS$.toFixed(2),
-             Promoción:res[i].pricePro,
+             PrecioBs:(res[i].priceS$ * Usd),
              FechaV:res[i].fecven,
              Marca:res[i].marca,
-             Procedencia:res[i].marca2
              }
            }
-           j++
+           if(id == res[i].category){
+            j++ 
+           }
          }
-         console.log(this.arrayExcel)
+         this.ExportToExcel()
+         }
+       )
+     })
+   }
+
+   getArrExcel(id){
+    let Usd = 0
+     this.serv.getDolar().subscribe(
+       req =>{
+         this.us = req;
+         Usd += this.us.USD.dolartoday;
+     this.serv.getProducts().subscribe(
+       res => {
+        let j = 1;
+        var ult = Object.keys(res).length
+        for(let i = 0; i < ult; i++){
+         if(res[i].priceS$ == 0 && id == res[i].category){
+           this.arrayExcel[j] = { 
+             Nombre:res[i].name,
+             Cantidad:res[i].stock,
+             PrecioBs:Math.round(res[i].priceS),
+             PrecioUSD:(res[i].priceS / Usd).toFixed(2),
+             FechaV:res[i].fecven,
+             Marca:res[i].marca,
+           }
+         }if(res[i].priceS$ > 0 && id == res[i].category){
+           this.arrayExcel[j] = { 
+             Nombre:res[i].name,
+             Cantidad:res[i].stock,
+             PrecioBs:(res[i].priceS$ * Usd),
+             PrecioUSD:res[i].priceS$.toFixed(2),
+             FechaV:res[i].fecven,
+             Marca:res[i].marca,
+             }
+           }
+           if(id == res[i].category){
+            j++ 
+           }
+         }
+         this.ExportToExcel()
+         }
+       )
+     })
+   }
+
+   getArrExcelUsd(id){
+    let Usd = 0
+     this.serv.getDolar().subscribe(
+       req =>{
+         this.us = req;
+         Usd += this.us.USD.dolartoday;
+     this.serv.getProducts().subscribe(
+       res => {
+        let j = 1;
+        var ult = Object.keys(res).length
+        for(let i = 0; i < ult; i++){
+         if(res[i].priceS$ == 0 && id == res[i].category){
+           this.arrayExcel[j] = { 
+             Nombre:res[i].name,
+             Cantidad:res[i].stock,
+             PrecioUSD:(res[i].priceS / Usd).toFixed(2),
+             FechaV:res[i].fecven,
+             Marca:res[i].marca,
+           }
+         }if(res[i].priceS$ > 0 && id == res[i].category){
+           this.arrayExcel[j] = { 
+             Nombre:res[i].name,
+             Cantidad:res[i].stock,
+             PrecioUSD:res[i].priceS$.toFixed(2),
+             FechaV:res[i].fecven,
+             Marca:res[i].marca,
+             }
+           }
+           if(id == res[i].category){
+            j++ 
+           }
+         }
+         this.ExportToExcel()
          }
        )
      })
    }
   
-
+   ExportToExcel(){
+    this.excel.exportToExcel(this.arrayExcel,'Lista de precios ' + this.fecha() + ' categoria ' + this.catName)
+  }
   public captureScreen()  
   {  
     var data = document.getElementById('contentToConvert');  
@@ -134,8 +236,52 @@ export class CategoryComponent implements OnInit {
       doc.setFontSize(12)
       doc.text(`Inventario del dia: ${this.fecha()}` , 74, 28)  
       doc.addImage(contentDataURL, 'PNG', 5, 32, imgWidth, imgHeight)  
-      doc.save(`Lista de precios dia ${this.fecha()}.pdf`); // Generated PDF   
+      doc.save(`Lista de precios dia ${this.fecha()} categoria ${this.catName}.pdf`); // Generated PDF   
     });  
   }  
 
+
+  openDialog(id): void {
+    let name = localStorage.getItem('name')
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {name: `Hola ${name}` }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result == false){
+        this.deleteProduct(id)
+        this.openSnackBar('El producto fué eliminado satisfactoriamente', 'Entendido')
+      }else{
+        this.openSnackBar('El producto no será borrado', 'Ok')
+      }
+    });
+  }
+
+
+  openDialogCat(id): void {
+    let name = localStorage.getItem('name')
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '450px',
+      data: {name: `Hola ${name}` }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result == false){
+        this.deleteCat(id)
+        this.openSnackBar('La categoria fué eliminada satisfactoriamente', 'Entendido')
+      }else{
+        this.openSnackBar('La categoria no será borrado', 'Ok')
+      }
+    });
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+    });
+  }
 }

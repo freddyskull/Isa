@@ -34,6 +34,14 @@ deletePre(pre:presupuesto){
   }
 }
 
+editPre(pre:presupuesto){
+  for(let i = 0; i < this.presupuesto.length; i++){
+    if(pre == this.presupuesto[i]){
+      this.presupuesto[i] = pre;
+    }
+  }
+}
+
 deleteAllPre(){
   this.presupuesto.splice(0,50);
 }
@@ -98,6 +106,14 @@ getPermiss(){
   }
 
   //Historial de ventas
+  getStatAct(){
+    return this.http.get(`${this.API_URI3}/ventas/statAct`); 
+  }
+
+  getStatAnt(){
+    return this.http.get(`${this.API_URI3}/ventas/statAnt`); 
+  }
+
   getHistorys(){
     return this.http.get(`${this.API_URI3}/ventas`); 
   }

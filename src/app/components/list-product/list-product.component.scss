@@ -103,3 +103,24 @@ input{
       font-size: 12px;
     } 
 }
+
+ul li {
+    cursor: pointer;  
+    span {
+      visibility: hidden;
+    }
+  
+    &.active {
+      color: white;
+  
+      span {
+        visibility: visible;
+      }
+    }
+  }
+  .iva{
+    position: absolute;
+    bottom: 70px;
+    left: 140px;
+    color: #ff9800;
+  }

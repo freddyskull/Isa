@@ -46,10 +46,24 @@
 }
 table{
     position: absolute;
-    bottom: -30%;
+    bottom: -1850%;
     width: 100%;
     color: #1a2035;
     font-weight: bold;
+    font-size: 15px;
+    th{
+        color: #1a2035;
+        font-weight: bold;
+        border-top: #1a2035 1.5px solid;
+        border-bottom: #1a2035 1.5px solid;
+        text-align: center;
+    }
+    td{
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+    }
+   
 }
 .btn-compro{
     position: absolute;
@@ -57,3 +71,4 @@ table{
     z-index: 100;
     left: 78%;
 }
+

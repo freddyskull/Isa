@@ -29,6 +29,7 @@ export class GenerarfacturasComponent implements OnInit {
 
   constructor(private serv: ProductService,private dialog:MatDialog) { }
   userList:any = [];
+  optionAux:number = 0;
   description: string = "";
   optionHistory: boolean = false;
   nombre:String ="";
@@ -55,6 +56,7 @@ export class GenerarfacturasComponent implements OnInit {
   tipoDV: boolean = false;
   finArr: any = [];
   totales: any = [];
+  presu:any = [];
   butons:boolean = false;
   origen:string = "IF-";
   condic:string = "";
@@ -96,6 +98,7 @@ export class GenerarfacturasComponent implements OnInit {
     startWith(''),
     map(value => this._filter(value))
   );
+  this.getPresu()
   }
 
 
@@ -104,6 +107,10 @@ export class GenerarfacturasComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   
+  }
+
+  getPresu(){
+    this.presu = this.serv.getPresupuestos()
   }
 
   getUsers(){

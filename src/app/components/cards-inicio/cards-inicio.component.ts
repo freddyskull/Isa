@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '../../services/product.service';
 import { priceUSD } from '../../models/priceUsdModel'
 import { NgForm } from '@angular/forms';
 
@@ -24,12 +24,16 @@ export class CardsInicioComponent implements OnInit {
   USD:number = 0;
   poc:boolean = false;
   usdfecValor: Date;
+  BsTot = 0;
+  UsdTot= 0;
+  BsTotAnt = 0;
+  UsdTotAnt= 0;
   permiss:any = {
     editperm: 0
    }
   priceUSD:priceUSD = {
     id: 0,
-    priceUSD: 0,
+    priceUSD: null,
     userName: localStorage.getItem("name"),
     date: new Date()
   }
@@ -37,7 +41,9 @@ export class CardsInicioComponent implements OnInit {
   conex:string = localStorage.getItem("conec");
   inputPermiss:boolean;
   userUSD: string ="";
-  dateUSD: string = ""
+  dateUSD: string = "";
+  userName:string = "";
+  user:any = [];
   constructor(private serv: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -50,6 +56,10 @@ export class CardsInicioComponent implements OnInit {
     this.getProfile();
     this.getPermiss();
     this.serv.deleteAllPre();
+    this.getDatos()
+    this.getTotAct()
+    this.getTotAnt()
+    this.userName = localStorage.getItem("name");
     this.serv.getUsdValor().subscribe(
       req => {
         this.USD = Object.values(req)[0].priceUSD
@@ -58,6 +68,41 @@ export class CardsInicioComponent implements OnInit {
       }
     )
   }
+//funcion para obtener el total del mes actual
+
+getTotAct(){
+  this.serv.getStatAct().subscribe(
+    req => {
+      var ult = Object.keys(req).length;
+      for (let i = 0; i < ult; i++) {
+        if(req[i].tipo == "Bs"){
+          console.log(req[i].total)
+          this.BsTot += req[i].total 
+        }else{
+          this.UsdTot += req[i].total 
+        }
+      }
+    }
+  )
+}
+
+
+getTotAnt(){
+  this.serv.getStatAnt().subscribe(
+    req => {
+      var ult = Object.keys(req).length;
+      for (let i = 0; i < ult; i++) {
+        if(req[i].tipo == "Bs"){
+          console.log(req[i].total)
+          this.BsTotAnt += req[i].total 
+        }else{
+          this.UsdTotAnt += req[i].total 
+        }
+      }
+    }
+  )
+}
+
 //funcion que cambia el valor del dolar que luego será utilizado de manera global
   update(form:NgForm){
     if(form.valid == true && this.priceUSD.priceUSD > 0){
@@ -74,6 +119,7 @@ export class CardsInicioComponent implements OnInit {
       )
       this.openSnackBar2()
     }
+    this.priceUSD.priceUSD = null;
   }
 //funcion que hace cambiar los permisos de edición a los empleados
   updatePemiss(){
@@ -94,8 +140,22 @@ export class CardsInicioComponent implements OnInit {
       }
     )
   }
-
-
+//retorno de datos básico del empleado o vendedor
+getDatos(){
+  var j = 0;
+  this.serv.getUsers().subscribe(
+    req => {
+     var ult = Object.keys(req).length;
+      for (let i = 0; i < ult; i++) {
+        if(this.userName == req[i].name){
+          this.user[j] = req[i];
+          j++;
+        }
+      }
+    }
+  )
+}
+//retorna los permisos de edición al almacén
   getPermiss(){
     this.serv.getPermiss().subscribe(
       req => {
@@ -103,10 +163,11 @@ export class CardsInicioComponent implements OnInit {
       }
     )
   }
+  //retorna la posición del empleado vendedor o jefe
   getProfile(){
     this.position  = localStorage.getItem("position");
   }
-
+  //retorna la suma de todos los productos en el almacén
   getTotalProduct(){
     this.serv.getProducts().subscribe(
       req => {
@@ -122,6 +183,7 @@ export class CardsInicioComponent implements OnInit {
       err => console.error(err)
     )
   }
+  //retorna total en bs
   getTotalBsProduct(){
     this.serv.getProducts().subscribe(
       req => {
@@ -135,7 +197,7 @@ export class CardsInicioComponent implements OnInit {
       err => console.error(err)
     )
   }
- 
+ //esta es la funcion que retorna los productos que tienen poca existencia en el almacén
   getExisProduct(){
     this.serv.getProducts().subscribe(
       req => {
@@ -152,6 +214,7 @@ export class CardsInicioComponent implements OnInit {
       err => console.error(err)
     )
   }
+  //funcion que obtiene el dolar de la página de dolar today
   getUSD(){
     this.serv.getDolar().subscribe(
       req => {
@@ -161,6 +224,7 @@ export class CardsInicioComponent implements OnInit {
       err => console.error(err)
     )
   }
+  //esta retorna la fecha de la ultima actualizacion de ese valor del dolar
   getfecUSD(){
     this.serv.getDolar().subscribe(
       req => {
@@ -171,6 +235,7 @@ export class CardsInicioComponent implements OnInit {
       err => console.error(err)
     )
   }
+  //esta funcion da un total estimado de todos los productos que hay en existencia en el almacén
   TotalUsd(){
     this.serv.getProducts().subscribe(
       req => {

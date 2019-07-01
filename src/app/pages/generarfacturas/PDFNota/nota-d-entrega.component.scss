@@ -46,7 +46,19 @@
 }
 table{
     position: absolute;
-    bottom: -30%;
+    bottom: -350%;
     width: 100%;
-    color: #1a2035
+    color: #1a2035;
+    font-weight: bold;
+    th{
+        color: #1a2035;
+        font-weight: bold;
+        border-top: #1a2035 1.5px solid;
+        border-bottom: #1a2035 1.5px solid;
+        text-align: center;
+    }
+    td{
+        text-align: center;
+        font-weight: bold;
+    }
 }

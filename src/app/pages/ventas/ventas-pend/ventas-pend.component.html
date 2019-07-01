@@ -40,7 +40,7 @@
                             </div>
                           </div>
                           <div class="d-flex justify-content-center">
-                              <mat-slide-toggle name="swich" [(ngModel)]="item.estado" (click)="openDialog(item.id, item.estado, item.idOrigen)" ></mat-slide-toggle>
+                              <mat-slide-toggle name="swich"  [(ngModel)]="item.estado" (click)="openDialog(item.id, item.estado, item.idOrigen)" ></mat-slide-toggle>
                           </div>
                         </div>
                       </div>
@@ -71,7 +71,12 @@
                             </div>
                           </div>
                           <div class="d-flex justify-content-center"  *ngIf="position == 'jefe' || position == 'empleado'">
-                              <mat-slide-toggle name="swich" [(ngModel)]="item.estado" (click)="updatePend(item.id, item.estado, item.idOrigen)" ></mat-slide-toggle>
+                            <ng-container *ngIf="item.estado == true; else elseTemplate">
+                                <mat-slide-toggle name="swich" [(ngModel)]="item.estado" (click)="updatePend(item.id, item.estado, item.idOrigen)" ></mat-slide-toggle>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <mat-slide-toggle name="swich" disabled [(ngModel)]="item.estado" ></mat-slide-toggle>
+                            </ng-template>
                           </div>
                         </div>
                       </div>

@@ -1,0 +1,175 @@
+<app-navigate></app-navigate>
+<div class="ml-5">
+  <nav class="nav-component">
+    <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio /</a> <a [routerLink]="['/productos']" routerLinkActive="router-link-active" > Lista de productos /</a> <a [routerLink]="['/productos/agregar']" routerLinkActive="router-link-active"> Agregar producto</a> 
+  </nav>
+</div>
+<div class="content mt-5 animated fadeIn" *ngIf="currency != 0">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Editar producto</h4>
+              <p class="card-category">Completa los datos requerido</p>
+            </div>
+            <div class="card-body">
+              <form #form="ngForm" class="form" (ngSubmit)="updateProduct(form)">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Nombre</label>
+                      <input type="text" autocomplete="off" class="form-control" name="name" [(ngModel)]="product.name"  >
+                    </div>
+                  </div>
+                  <div class="col-md-3" >
+                    <div class="form-group" *ngIf="product.priceB != 0">
+                      <label class="bmd-label-floating">Precio de compra Bs</label>
+                      <input type="number"  autocomplete="off" min="1" class="form-control" name="priceB"  [(ngModel)]="product.priceB" >
+                    </div>
+                    <div class="form-group" *ngIf="product.priceB == 0">
+                      <label class="bmd-label-floating">Precio de compra $</label>
+                      <input type="number"  autocomplete="off" min="1" class="form-control" name="priceB$"  [(ngModel)]="product.priceB$" >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group mb-3" *ngIf="product.priceB != 0">
+                      <div class="form-group">
+                          <label class="bmd-label-floating">Precio de venta Bs, active para agregar iva</label>
+                          <input type="number" autocomplete="off" min="1" name="priceS" [(ngModel)]="product.priceS" class="form-control" >
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="product.priceB == 0">
+                      <label class="bmd-label-floating">Precio de Venta $</label>
+                      <input type="number"  autocomplete="off" min="1" class="form-control" name="priceS$"  [(ngModel)]="product.priceS$" >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Cantidad</label>
+                      <input type="number" autocomplete="off" min="1" class="form-control" name="stock" [(ngModel)]="product.stock">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Fecha de vencimiento</label>
+                      <input type="text" placeholder="Ejemplo: 2019-05-21 Año-Fecha-Dia" autocomplete="off" class="form-control" name="recibo" [(ngModel)]="product.fecven">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field class="mt-2 pag">
+                      <mat-label>Categoria: {{cat}}</mat-label>
+                        <mat-select name="category" [(ngModel)]="product.category">
+                          <mat-option  *ngFor="let item of category" [value]="item.id">
+                            {{ item.name }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Procedencia</label>
+                      <input type="text" class="form-control" name="marca2" [(ngModel)]="product.marca2">
+                    </div> 
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Marca del producto</label>
+                      <input type="text" class="form-control" name="marca" [(ngModel)]="product.marca">
+                    </div> 
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Precio de promoción</label>
+                      <input type="text" class="form-control" name="precioPro" [(ngModel)]="product.pricePro">
+                    </div> 
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Imagen de internet (opcional fines estéticos)</label>
+                      <input type="text" class="form-control" name="img" [(ngModel)]="product.img">
+                    </div> 
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label>Descripción</label>
+                        <div class="form-group">
+                            <label class="bmd-label-floating"> Haz saber que cosas adicionales puede contener tu producto</label>
+                            <textarea class="form-control" rows="5" name="description" [(ngModel)]="product.description"></textarea>
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+                <button type="submit" class="btn btn-primary  mt-5" >Editar este producto</button>
+                <mat-slide-toggle class="ml-2 mt-4 iva" name="iva" [(ngModel)]="product.iva" >IVA</mat-slide-toggle>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 animated fadeInRight">
+          <div class="card card-profile">
+            <div class="card-avatar">
+              <img class="img" [src]="product.img == '' || '' ? './assets/img/no-product.png' : product.img" />
+            </div>
+            <div class="card-body">
+                <h6 class="card-category"> Categoria  </h6>
+                <h4 class="card-title">{{product.name}}</h4>
+                <div class="row mt-2 mb-2 text-left">
+                  <div class="col md-6">
+                      <div *ngIf="product.priceB != 0">
+                          Precio de compra {{product.priceB }}
+                      </div>
+                      <div *ngIf="product.priceB == 0">
+                          Precio de compra {{product.priceB$ | currency}}
+                      </div>
+                  </div>
+                  <div class="col md-6">
+                      <div *ngIf="product.priceB != 0">
+                         <div *ngIf="product.iva == 0">
+                            venta Bs: {{product.priceS | number}}
+                         </div>
+                         <div *ngIf="product.iva != 0">
+                            venta Bs + iva: {{product.priceS * 0.16 + product.priceS | number}}
+                         </div>
+                      </div>
+                      <div *ngIf="product.priceB == 0">
+                          venta: {{product.priceS$  | currency}}
+                      </div>
+                  </div>
+                </div>
+                <div class="row mt-2 mb-4 text-left">
+                  <div class="col md-6 ">
+                      Cantidad: {{product.stock}} 
+                  </div> 
+                  <div class="col md-6" *ngIf="product.priceB == 0">
+                      Mayor: {{product.priceAlldol | currency}} 
+                  </div>  
+                  <div class="col md-6" *ngIf="product.priceB != 0">
+                      Mayor: {{product.priceAll | number}} 
+                  </div> 
+                </div>
+                <div class="row mt-2 mb-4 text-left">
+                  <div class="col md-12 ">
+                    Descripción: {{product.description}} 
+                </div>
+                </div>
+                
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-warning btn-round mr-4" ><i class="material-icons">create</i></a>
+                    <a  class="btn btn-danger btn-round" ><i class="material-icons">delete</i></a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

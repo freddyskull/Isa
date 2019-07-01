@@ -1,0 +1,72 @@
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 60px;
+	height: 30px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 30px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+input:checked + label {
+	background: #9b26be;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 50px;
+}
+
+// centering
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.close{
+	font-size: 30px;
+	color: red;
+	position: relative;
+	width: 10%;
+	left: 88%;
+	bottom: 75%;
+	transition: 1s;
+	i:hover{
+		color: #9b26be;
+	}
+}
+table {
+	width: 100%;
+	th{
+		text-align: center;
+	}
+  }
+  mat-tab{
+	  label{
+		  color: #fff;
+	  }
+  }

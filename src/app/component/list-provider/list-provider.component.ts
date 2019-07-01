@@ -13,7 +13,7 @@ export class ListProviderComponent implements OnInit {
 
   prov: any =[];
   consult: any =[];
-
+  filter:string = '';
   ngOnInit() {
     this.getProvider()
   }

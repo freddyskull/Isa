@@ -28,17 +28,21 @@
 
 
 .tablee2  {
+    
     th{
-        padding-right: 100px;
+        text-align: center;
         color: #1a2035;
         font-weight: bold;
-        font-size: 15px;
-       
+        font-size: 20px;
+        border-top: #1a2035 1.5px solid;
+        border-bottom: #1a2035 1.5px solid;
+        margin: 10px;
+        width: 250px;
     }
     td{ 
-      padding-right: 100px;
       color: #1a2035;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 20px;
+      text-align: center;
     }     
 }

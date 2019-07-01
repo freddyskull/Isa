@@ -59,6 +59,12 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Imagen del empleado, solo url de internet</label>
+                        <input type="text" autocomplete="off" name="img"    class="form-control" [(ngModel)]="user.img" >
+                      </div>
+                    </div>
                   </div>
                   <button type="submit" class="btn btn-primary  mt-5" *ngIf="edit == false">Agregar nuevo cliente</button>
                   <button class="btn btn-primary  mt-5" *ngIf="edit" (click)="editEmple(user.id)" >Editar</button>
@@ -70,10 +76,15 @@
           <div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
+                  <ng-container *ngIf="user.img != ''; else elseTemplate">
+                      <img class="img" [src]="user.img" />
+                  </ng-container>
+                  <ng-template #elseTemplate>
                     <img class="animated pulse"  src="./assets/img/trabajador.png" *ngIf="user.position == ''"/>
                     <img class="animated pulse"  src="./assets/img/jefe.png" *ngIf="user.position == 'jefe'"/>
                     <img class="animated pulse"  src="./assets/img/vendedor.png" *ngIf="user.position == 'vendedor'">
                     <img class="animated pulse" src="./assets/img/empleado.png" *ngIf="user.position == 'empleado'">
+                  </ng-template>
                 </div>
                 <div class="card-body">
                   <h6 class="card-category"> {{user.position}} </h6>

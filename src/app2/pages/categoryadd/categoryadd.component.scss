@@ -1,0 +1,22 @@
+body{
+    overflow: hidden;
+}
+.nav-component {
+    
+    a{
+        color: rgb(189, 184, 184);
+    }
+}
+.disabled{
+    color: rgb(70, 67, 67)
+}
+.img{
+    color: aliceblue;
+    background-color:rgb(178, 23, 199);height:100px; width:100px;
+    span{
+    text-align: center;
+    font-size: 4rem;
+    position: relative;
+    top:35px;
+    }
+}

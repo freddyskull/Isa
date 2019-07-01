@@ -1,39 +1,7 @@
 <div class="container-fluid">
-  <div class="row">
+  <!-- dasboard jefe -->
+  <div class="row" *ngIf="position == 'jefe'">
     <div class="col-xl-4 col-lg-12">
-      <div class="card card-chart">
-        <div class="card-header card-header-success">
-          <div class="ct-chart" id="dailySalesChart"></div>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">Ventas de este mes</h4>
-          <p class="card-category">
-            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> incremento.</p>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="material-icons">access_time</i> ultima actualización
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-12">
-      <div class="card card-chart">
-        <div class="card-header card-header-warning">
-          <div class="ct-chart" id="websiteViewsChart"></div>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">Correos suscritos a la página</h4>
-          <p class="card-category">Ultima persona subscrita: </p>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="material-icons">access_time</i> Ultima actualización
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-12" *ngIf="position == 'jefe'">
       <div class="card card-chart">
         <div class="card-body">
           <h4 class="card-title">Establecer Precio del dolar</h4>
@@ -43,13 +11,113 @@
                 <table class="example-full-width ml-3 mt-2" cellspacing="4">
                   <tr>
                     <td><mat-form-field class="example-form-field">
-                        <input matInput type="number" placeholder="Ultimo Precio: {{USD | number}} BS" name="priceUsd" [(ngModel)]="priceUSD.priceUSD">
+                        <input matInput type="number" placeholder="Ultimo Precio: {{(USD.toLocaleString())}} BS" name="priceUsd" [(ngModel)]="priceUSD.priceUSD">
                       </mat-form-field></td>
-                    <td><button type="submit" mat-fab color="primary">Cambiar</button></td>                   
+                    <td>
+                      <button type="submit" mat-fab color="primary">
+                        <small>cambiar</small>
+                      </button>
+                    </td>                   
                   </tr>
                 </table>                
               </form>
             </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i>Ultimo cambio por: {{userUSD}} el {{dateUSD |date:'shortDate'}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-body">
+          <h4 class="card-title">Ventas de este mes</h4>
+          <div class="card-category">
+            <ul class="list-inline m-2">
+              <ng-container *ngIf="BsTot > BsTotAnt; else elseTemplateBsDown">
+                <li class="list-inline-item text-success"><h4>Bs {{BsTot | convertBs}}<i class="material-icons">trending_up</i> |</h4></li>
+              </ng-container>
+              <ng-template #elseTemplateBsDown>
+                <li class="list-inline-item text-danger"><h4>Bs {{BsTot | convertBs}}<i class="material-icons">trending_down</i> | </h4></li>
+              </ng-template>
+              <ng-container *ngIf="UsdTot > UsdTotAnt; else elseTemplate">
+                <li class="list-inline-item text-success"><h4>{{UsdTot | currency}}<i class="material-icons">trending_up</i></h4></li>
+              </ng-container>
+              <ng-template #elseTemplate>
+                  <li class="list-inline-item text-danger"><h4>{{UsdTot | currency}}<i class="material-icons">trending_down</i></h4></li>
+              </ng-template>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <ul class="list-inline">
+              <ng-container *ngIf="BsTot > BsTotAnt; else elseTemplateBs">
+                <li class="list-inline-item">Alza en Bs</li>
+              </ng-container>
+              <ng-template #elseTemplateBs>
+                <li class="list-inline-item">Baja en Bs</li>
+              </ng-template>
+
+              <ng-container *ngIf="UsdTot > UsdTotAnt; else elseTemplateUsd">
+                <li class="list-inline-item">y alza en $</li>
+              </ng-container>
+              <ng-template #elseTemplateUsd>
+                <li class="list-inline-item">y baja en $</li>
+              </ng-template>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-body">
+          <h4 class="card-title">Ventas del mes pasado</h4>
+          <div class="card-category">
+            <ul class="list-inline m-2">
+                <li class="list-inline-item text-warning"><h4>Bs {{BsTotAnt | convertBs}} |</h4></li>
+                <li class="list-inline-item text-warning"><h4>{{UsdTotAnt | currency}}</h4></li>
+              </ul>
+           </div>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> Ultima actualización
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- dasboard empleados y vendedores -->
+  <div class="row" *ngIf="position != 'jefe'">
+    <div class="col-xl-4 col-lg-12" *ngFor="let item of user">
+      <div class="card card-profile">
+        <div class="card-avatar">
+          <ng-container *ngIf="item.img != ''; else elseTemplate">
+            <img class="img" [src]="item.img" />
+          </ng-container>
+          <ng-template #elseTemplate>
+            <img  src="./assets/img/jefe.png"       *ngIf="item.position == 'jefe'"/>
+            <img  src="./assets/img/vendedor.png"   *ngIf="item.position == 'vendedor'">
+            <img  src="./assets/img/empleado.png"   *ngIf="item.position == 'empleado'">
+          </ng-template>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"> {{item.userName}} : {{item.position}} </h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-body">
+          <h4 class="card-title">Precio del dolar establecido</h4>
+          <div class="card-category">
+            <h3 class="text-success">{{USD | convertBs}} BS</h3>
           </div>
         </div>
         <div class="card-footer">
@@ -105,7 +173,7 @@
             <i class="material-icons">info_outline</i>
           </div>
           <p class="card-category">Inverción Bs</p>
-          <h5 class="card-title" style="font-size:1rem">{{sumaBs | number}}
+          <h5 class="card-title" style="font-size:1rem">{{sumaBs | convertBs}}
             <small>Bs</small>
           </h5>
         </div>
@@ -132,23 +200,12 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title">Tu historial de ventas</h4>
-            <p class="card-category">Obten de una manera rapida todas las ventas que has producido</p>
-          </div>
-          <div class="card-body table-responsive">
-            <app-history-user></app-history-user>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12" *ngIf="position == 'jefe'">
-        <mat-slide-toggle name="pemiss" [(ngModel)]="inputPermiss" (click)="updatePemiss()" >
-          <small>Activar o desactiva la Edición de inventario, </small>
-        </mat-slide-toggle>
-        <small> tenga en cuenta que este cambio serán visible solo para los empleados, los vendedores simplemente no pueden hacer cambios al inventario</small>
-      </div>
+    <div class="col-lg-6 col-md-12" *ngIf="position == 'jefe' || userName == 'Freddy P Caldera'">
+      <mat-slide-toggle name="pemiss" [(ngModel)]="inputPermiss" (click)="updatePemiss()" >
+        <small>Activar o desactiva la Edición de inventario, </small>
+      </mat-slide-toggle>
+      <small> tenga en cuenta que este cambio serán visible solo para los empleados, los vendedores simplemente no pueden hacer cambios al inventario</small>
+    </div>
   </div>
   
 

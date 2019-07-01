@@ -1,0 +1,36 @@
+.custom-select{
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: rgb(102, 104, 105);
+    margin-top: 0px;
+}
+.nav-component {
+    
+    a{
+        color: rgb(189, 184, 184);
+    }
+}
+.disabled{
+    color: rgb(70, 67, 67)
+}
+.input-group-prepend{
+    label{
+        margin-top: 30px;
+        color: rgb(147, 151, 153);
+    }
+}
+.checkbox{
+   input{
+    position: absolute;
+    top: 60%;
+    left:-8%;
+   }
+}
+
+.iva{
+    position: relative;
+    top: 25px;
+    left: 20px;
+}

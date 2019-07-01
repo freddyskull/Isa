@@ -1,0 +1,117 @@
+.card-body a{
+ margin:1rem; 
+}
+
+ul li{
+    list-style: none;
+}
+li{
+    margin-bottom: 10px
+}
+
+
+h5, h4, h3, h2, h1, p {
+    color: rgb(216, 214, 214);
+}
+.icon{
+    transition: 0.5s all;
+}
+#edit:hover  {
+    color: #ff9800;
+}
+
+#delete:hover{
+    color:#f44336;
+}
+
+#send:hover{
+    color:#00bcd4;
+}
+input{
+    font-size: 1.5rem;
+}
+.cantidad{
+    position: relative;
+    bottom: 110px;
+    left: 150px;
+    background-color: #7b1091;
+    width: 50px;
+    height: 35px;
+    border-radius: 50%;
+    div{
+        position: absolute;
+        bottom: 56%;
+        right:65%;
+    }
+    span{
+        position: relative;
+        top:5px;
+        font-size: 1rem;
+        text-align: center;
+    }
+}
+
+.custom-select{
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: rgb(102, 104, 105);
+}
+.nav-component {
+    
+    a{
+        color: rgb(189, 184, 184);
+    }
+}
+.disabled{
+    color: rgb(70, 67, 67)
+}
+
+.no-class{
+    background-color: transparent;
+    border: none;
+    color: aliceblue;
+    :hover{
+        color: #f44336;
+    }
+}
+
+.card-pro{
+    position: absolute;
+    bottom:16.5%;
+    width: 100%;
+}
+.ofertas{
+    position: absolute;
+        top: 20%;
+        img{
+            width: 50px;
+        height: 50px;
+        }
+}
+
+
+.textcolor{
+   th{
+    color: rgb(189, 184, 184);
+   }
+   td{
+    color: rgb(189, 184, 184);
+   }
+}
+.tablee2  {
+    th{
+        padding-right: 100px;
+        color: #1a2035;
+        font-weight: bold;
+        font-size: 15px;
+       
+    }
+    td{ 
+      padding-right: 100px;
+      color: #1a2035;
+      font-weight: bold;
+      font-size: 12px;
+    } 
+}

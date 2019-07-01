@@ -1,5 +1,5 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { product } from 'src/app/models/productModel';
+import { product } from '../../models/productModel';
 import { ProductService } from '../../services/product.service'
 import {  Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -35,7 +35,8 @@ export class FormProductComponent implements OnInit {
   
   good: boolean = false;
   bad: boolean = false;
-  edit: boolean = false ;
+  edit: boolean = false;
+  error: string = "";
   compra:string ="";
   category:any = [];
   imagenSeleccionada: any;
@@ -62,36 +63,59 @@ export class FormProductComponent implements OnInit {
   }
   
   saveProduct(form:NgForm){
-    if(form.valid == true){
-      
-      delete this.product.create_at;
-      this.product.recibo = this.user;
-      delete this.product.id;
-      if(this.currency == 1){
-        this.product.priceB$ = "";
-        this.product.priceS$ = ""; 
-      }else{
-        this.product.priceB = "";
-        this.product.priceS = "";
-        this.iva = false;
-      }
-      
-      this.producto.saveProduct(this.product).subscribe(
+    console.log(form)
+      this.producto.getProducts().subscribe(
         req => {
-          this.resetForm();
-          this.good = true;
-          setTimeout(()=>{
-            this.good = false;
-          },4000);
-        },
-        err => console.log(err)
+          let ult = Object.keys(req).length
+          for (let i = 0; i < ult; i++) {
+            console.log(req[i].name)
+            if(form.value.name == req[i].name ){
+              this.error = 'El producto "'+ form.value.name + '" ya existe dentro de la base de datos'
+              this.bad = true;
+              setTimeout(()=>{
+                this.bad = false;
+                this.error = ''
+              },8000);
+            }
+          }
+
+          if(this.error == ""){
+            if(form.valid == true){
+              delete this.product.create_at;
+              this.product.recibo = this.user;
+              delete this.product.id;
+              if(this.currency == 1){
+                this.product.priceB$ = "";
+                this.product.priceS$ = ""; 
+              }else{
+                this.product.priceB = "";
+                this.product.priceS = "";
+                this.iva = false;
+              }
+              this.producto.saveProduct(this.product).subscribe(
+                req => {
+                  this.resetForm();
+                  this.good = true;
+                  setTimeout(()=>{
+                    this.good = false;
+                  },4000);
+                },
+                err => console.log(err)
+              )
+            }else{
+              this.error = 'Algunos campos requeridos siguen vacios'
+              this.bad = true;
+                  setTimeout(()=>{
+                    this.bad = false;
+                    this.error = ''
+                  },8000);
+            }
+          } 
+
+
+
+        }
       )
-    }else{
-      this.bad = true;
-          setTimeout(()=>{
-            this.bad = false;
-          },8000);
-    }
   }
   
   getCategory(){

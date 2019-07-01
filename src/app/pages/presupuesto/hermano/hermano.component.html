@@ -6,10 +6,10 @@
               <button class="text-warning no-class" style="font-size:1rem" (click)="back()">Volver</button>
             </div>
             <div class="text-center" *ngIf="pr.priceS != 0">
-              <h4>Precio en Bs: <span>{{pr.priceS | number}}</span> | <span class="text-light"> {{pr.name}}</span> | Precio en Usd: <span>{{pr.priceS / usdValor | currency}}</span></h4>
+              <h4>Precio en Bs: <span>{{ (pr.priceS) | convertBs }}</span> | <span class="text-light"> {{pr.name}}</span> | Precio en Usd: <span>{{pr.priceS / usdValor | currency}}</span></h4>
             </div>
             <div class="text-center" *ngIf="pr.priceS == 0">
-              <h4>Precio en Bs: <span>{{pr.priceS$ * usdValor | number}}</span> | <span class="text-light"> {{pr.name}}</span> | Precio en Usd: <span>{{pr.priceS$ | currency}}</span></h4>
+              <h4>Precio en Bs: <span>{{ (pr.priceS$ * usdValor) | convertBs }}</span> | <span class="text-light"> {{pr.name}}</span> | Precio en Usd: <span>{{pr.priceS$ | currency}}</span></h4>
             </div>
             <form #canti="ngForm" (ngSubmit)="add(canti,pr.name,restar,usdValor,pr.priceS,pr.id,pr.priceS$,pr.priceB$,pr.iva)">
               <div class="row">
@@ -25,7 +25,7 @@
                           </li>
                           <li class="list-inline-item">
                             <h3>
-                                Unidades Bs {{restar * pr.priceS | number}}
+                                Unidades Bs {{ (restar * pr.priceS) | convertBs }}
                             </h3>
                           </li>
                           <li class="list-inline-item">
@@ -49,7 +49,7 @@
                           </h3>
                         </li>
                         <li class="list-inline-item">                        
-                          <h3>Unidades Bs  {{restar * pr.priceS$ * usdValor     | number}}</h3>
+                          <h3>Unidades Bs  {{ (restar * pr.priceS$ * usdValor) | convertBs }}</h3>
                         </li>
                         <li class="list-inline-item">
                           <h3>                          
@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="bmd-label-floating">Cantidad de medicamentos a agregar</label>
-                    <input type="number" min="0" max="{{pr.stock}}" class="form-control" name="stock" style="font-size:2rem"  [(ngModel)]="restar">
+                    <input type="number" autofocus min="1"  class="form-control" name="stock" [(ngModel)]="restar" style="font-size:2rem">
                   </div>
                   <button type="submit" class="btn btn-secundary btn-lg btn-block" (click)="delete(pr.id)">Agregar</button>
                 </div>

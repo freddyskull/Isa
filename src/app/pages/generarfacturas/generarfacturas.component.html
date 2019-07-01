@@ -43,6 +43,9 @@
                       </li>
                       <li class="list-inline-item"><button mat-stroked-button class="ml-4" (click)="getClienById(chooseClient)" *ngIf="chooseClient != ''">Rellenar</button></li>
                     </ul>
+                    <div *ngIf="presu.length > 14">
+                      <h4 class="text-light">Facturación modo libre desabilitada</h4>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -67,7 +70,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <mat-form-field class="example-full-width">
-                        <input matInput autofocus autocomplete="off" placeholder="Número de contacto" name="contacto" [(ngModel)]="contacto" required>
+                        <input matInput autofocus autocomplete="off" placeholder="Número de contacto" name="contacto" [(ngModel)]="contacto">
                       </mat-form-field>
                     </div>
                   </div>
@@ -83,7 +86,7 @@
                   <div class="col-md-3">
                     <mat-form-field class="mt-4">
                       <mat-label>Seleccione un vendedor</mat-label>
-                      <mat-select name="vendeor" [(ngModel)]="vendedor" required>
+                      <mat-select name="vendeor" [(ngModel)]="vendedor">
                         <mat-option *ngFor="let item of userList" [value]="item.name">
                           {{item.name}}
                         </mat-option>
@@ -105,14 +108,16 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <mat-form-field class="example-full-width">
-                        <input matInput autofocus autocomplete="off" placeholder="dirección fiscal" name="dir"  [(ngModel)]="direccion" required>
+                        <input matInput #message maxlength="78" placeholder="Dirección" name="dir"  [(ngModel)]="direccion">
+                        <mat-hint align="start"><strong>No mayor a 78 caracteres</strong> </mat-hint>
+                        <mat-hint align="end">{{message.value.length}} / 78</mat-hint>
                       </mat-form-field>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <mat-form-field class="example-full-width">
-                        <input matInput autofocus autocomplete="off" placeholder="Origen del pedido" name="origen"  [(ngModel)]="origen" required>
+                        <input matInput autocomplete="off" placeholder="Origen del pedido" name="origen"  [(ngModel)]="origen" required>
                       </mat-form-field>
                     </div>
                   </div>
@@ -137,7 +142,7 @@
                   </div>
                   <div class="col-md-3">
                     <mat-form-field class="mt-3 pag">
-                      <input type="text" placeholder="Estado (dirección 2)" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="direccion2">
+                      <input type="text" maxlength="78" placeholder="Estado (dirección 2)" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="direccion2">
                       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                           {{option}}
@@ -145,7 +150,7 @@
                       </mat-autocomplete>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-3 animated fadeIn" *ngIf="condic=='DECONTADO'">
                     <mat-form-field class="mt-3 pag">
                       <mat-label>Tipo de pago</mat-label>
                       <mat-select   name="optionAux" [(ngModel)]="optionAux" required>
@@ -202,6 +207,7 @@
                     [transferencia]="transferencia"
                     [cheque]="cheque"
                     [condic]="condic"
+                    [optionAux]="optionAux"
                     ></app-factura>
                   </div>
                   <div class="d-inline" *ngIf="optionChoose == 2">
@@ -228,6 +234,7 @@
                     [transferencia]="transferencia"
                     [cheque]="cheque"
                     [condic]="condic"
+                    [optionAux]="optionAux"
                     ></app-notaEntrega>
                   </div>
                   <div class="d-inline">

@@ -25,16 +25,16 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <mat-form-field class="example-full-width">
-                        <input matInput #message maxlength="89" placeholder="Dirección" name="direccion" [(ngModel)]="client.direccion">
-                        <mat-hint align="start"><strong>No mayor a 89 caracteres</strong> </mat-hint>
-                        <mat-hint align="end">{{message.value.length}} / 89</mat-hint>
+                        <input matInput #message maxlength="78" placeholder="Dirección" name="direccion" [(ngModel)]="client.direccion">
+                        <mat-hint align="start"><strong>No mayor a 78 caracteres</strong> </mat-hint>
+                        <mat-hint align="end">{{message.value.length}} / 78</mat-hint>
                       </mat-form-field>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <mat-form-field class="example-full-width">
-                        <input type="text" placeholder="Estado (dirección 2)" matInput [formControl]="myControl" [matAutocomplete]="auto" name="direccion2" [(ngModel)]="client.direccion2">
+                        <input type="text" maxlength="78" placeholder="Estado (dirección 2)" matInput [formControl]="myControl" [matAutocomplete]="auto" name="direccion2" [(ngModel)]="client.direccion2">
                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{option}}
