@@ -32,10 +32,43 @@
         </div>
     </div>
 </body>
+<body class="dark-edition animated fadeIn" *ngIf="pdf == false">
+    <app-navigate></app-navigate>
+    <div class="col-md-12 mt-5">
+            <div class="row">
+                <div class="col-md-12 tex-center">
+                    <h2 class="text-danger" (click)="pdf =! pdf">Volver</h2>
+                </div>
+            </div>
+        <div class="row m-5 animated fadeIn">
+            <div class="col-md-4 text-center">
+                <button class="no-class">
+                    <h2 class="text-warning" (click)="pdf =! pdf; captureScreen('Bs')" >BS 
+                        <i class="fas fa-coins"></i>
+                    </h2>
+                </button>
+            </div>
+            <div class="col-md-4 text-center">
+                <button class="no-class">
+                    <h2 class="text-success" (click)="pdf =! pdf;  captureScreen('Usd')">USD 
+                        <i class="fas fa-dollar-sign"></i>
+                    </h2>
+                </button>
+            </div>
+            <div class="col-md-4 text-center">
+                <button class="no-class">
+                    <h2 class="text-info" (click)="pdf =! pdf; aux = captureScreen('Usd-Bs')">Bs / Usd 
+                        <i class="fas fa-coins"></i> 
+                        <i class="fas fa-dollar-sign"></i> 
+                    </h2>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
 
 
-
-<body class="dark-edition animated fadeIn" *ngIf="excell">
+<body class="dark-edition animated fadeIn" *ngIf="excell && pdf">
     <app-navigate></app-navigate>
     <div class="ml-5">
         <nav class="nav-component">
@@ -56,7 +89,7 @@
         <div class="animated fadeIn" *ngIf="busqueda">
             <ul class="list-inline">
                 <li class="list-inline-item">
-                    <button value="CPTURE" (click)="captureScreen()" class="no-class" >
+                    <button value="CPTURE" (click)="pdf =! pdf" class="no-class" >
                         <p class="add mt-4 text-danger">DESCARGAR PDF <i class="fas fa-file-pdf" style="font-size:1.5rem"></i>
                         </p>
                     </button>
@@ -103,10 +136,10 @@
                         <a href="#" class="text-info">Nombre </a>
                     </li>
                     <li class="list-inline-item" [class.active]="order === 'product.fecven'" (click)="setOrder('fecven')" >
-                        <a href="#" class="text-warning">Fecha de vencimiento</a>
+                        <a href="#" class="text-info">Fecha de vencimiento</a>
                     </li>
                     <li class="list-inline-item" [class.active]="order === 'product.stock'" (click)="setOrder('stock')" >
-                        <a href="#" class="text-danger">Cantidad</a>
+                        <a href="#" class="text-info">Cantidad</a>
                     </li>
                 </ul>
             </div>
@@ -138,33 +171,68 @@
                 </tr>
                 </tbody>
             </table> 
-            <table class="tablee2" id="contentToConvert">
-                <thead>
-                    <th> <strong>Cantidad</strong> </th>
-                    <th> <strong>Nombre</strong> </th>
-                    <th> <strong>Precio Bs</strong> </th>
-                    <th> <strong>Precio USD</strong> </th>
-                    <th> <strong>Fecha V</strong> </th> 
-                </thead>
-                <tbody *ngFor="let item of search">
-                <tr>
-                    <td>{{item.stock}} </td>
-                    <td>{{item.name}}</td>
-                    <td *ngIf="item.priceB != 0">{{item.priceS | convertBs}} </td>
-                    <td *ngIf="item.priceB != 0">{{item.priceS / Usd | currency}} </td>
-                    <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | convertBs}} </td>
-                    <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
-                    <td> {{item.fecven}} </td> 
-                </tr>
-                </tbody>
-            </table> 
         </div>
    </div>
 </body>
 
+<table class="tablee2" id="contentToConvert" *ngIf="aux == 'Usd-Bs'">
+    <thead>
+        <th> <strong>Cantidad</strong> </th>
+        <th> <strong>Nombre</strong> </th>
+        <th> <strong>Precio Bs</strong> </th>
+        <th> <strong>Precio USD</strong> </th>
+        <th> <strong>Fecha V</strong> </th> 
+    </thead>
+    <tbody *ngFor="let item of search">
+    <tr>
+        <td>{{item.stock}} </td>
+        <td>{{item.name}}</td>
+        <td *ngIf="item.priceB != 0">{{item.priceS | convertBs}} </td>
+        <td *ngIf="item.priceB != 0">{{item.priceS / Usd | currency}} </td>
+        <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | convertBs}} </td>
+        <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
+        <td> {{item.fecven}} </td> 
+    </tr>
+    </tbody>
+</table> 
+<table class="tablee2" id="contentToConvert" *ngIf="aux == 'Bs'">
+    <thead>
+        <th> <strong>Cantidad</strong> </th>
+        <th> <strong>Nombre</strong> </th>
+        <th> <strong>Precio Bs</strong> </th>
+        <th> <strong>Fecha V</strong> </th> 
+    </thead>
+    <tbody *ngFor="let item of search">
+    <tr>
+        <td>{{item.stock}} </td>
+        <td>{{item.name}}</td>
+        <td *ngIf="item.priceB != 0">{{item.priceS | convertBs}} </td>
+        <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | convertBs}} </td>
+        <td> {{item.fecven}} </td> 
+    </tr>
+    </tbody>
+</table> 
+<table class="tablee2" id="contentToConvert" *ngIf="aux == 'Usd'">
+    <thead>
+        <th> <strong>Cantidad</strong> </th>
+        <th> <strong>Nombre</strong> </th>
+        <th> <strong>Precio USD</strong> </th>
+        <th> <strong>Fecha V</strong> </th> 
+    </thead>
+    <tbody *ngFor="let item of search">
+    <tr>
+        <td>{{item.stock}} </td>
+        <td>{{item.name}}</td>
+        <td *ngIf="item.priceB != 0">{{item.priceS / Usd | currency}} </td>
+        <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
+        <td> {{item.fecven}} </td> 
+    </tr>
+    </tbody>
+</table> 
+
 
             
-   
+   {{aux}} 
 
 
 

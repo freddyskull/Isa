@@ -50,5 +50,17 @@ class VentasController {
             res.json({ message: 'La venta se ha eliminado' });
         });
     }
+    estadAct(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ventas = yield database_1.default.query('SELECT * FROM `ventas` WHERE MONTH(date)=MONTH(CURDATE())');
+            res.json(ventas);
+        });
+    }
+    estadAnt(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ventas = yield database_1.default.query('SELECT * FROM `ventas` WHERE MONTH(date) = MONTH(DATE_ADD(CURDATE(),INTERVAL -1 MONTH))');
+            res.json(ventas);
+        });
+    }
 }
 exports.ventasController = new VentasController();

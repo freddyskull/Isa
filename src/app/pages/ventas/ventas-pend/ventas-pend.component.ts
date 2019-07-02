@@ -25,6 +25,9 @@ export class VentasPendComponent implements OnInit {
   name:string = "";
   us:any = [];
   Usd: Number = 0;
+  order: string = 'name';
+  reverse: boolean = false;
+  filter:string = '';
   displayedColumns: string[] = [ 'name','stock','marca','fecven','create_at','recibo','priceB', 'priceB$'];
   dataSource:any =[];
   ngOnInit() {
@@ -33,6 +36,17 @@ export class VentasPendComponent implements OnInit {
     this.getPendJe()
     this.position = localStorage.getItem("position");
     this.name = localStorage.getItem("name");
+    this.converTo()
+  }
+
+  
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+    return false;
   }
 
 

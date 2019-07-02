@@ -34,6 +34,16 @@ class VentasController {
         res.json({message: 'La venta se ha eliminado'}); 
     }
 
+    public async estadAct (req: Request, res: Response): Promise<void> { 
+        const ventas = await database.query('SELECT * FROM `ventas` WHERE MONTH(date)=MONTH(CURDATE())');
+        res.json(ventas);
+     }
+
+     public async estadAnt (req: Request, res: Response): Promise<void> { 
+        const ventas = await database.query('SELECT * FROM `ventas` WHERE MONTH(date) = MONTH(DATE_ADD(CURDATE(),INTERVAL -1 MONTH))');
+        res.json(ventas);
+     }
+
 }
 
 export const ventasController = new VentasController();

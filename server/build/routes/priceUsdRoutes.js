@@ -11,6 +11,7 @@ class PermissRoutes {
         this.router.get('/', priceUsdController_1.priceusdController.list);
         this.router.get('/:id', priceUsdController_1.priceusdController.getOne);
         this.router.put('/:id', priceUsdController_1.priceusdController.update);
+        this.router.post('/', priceUsdController_1.priceusdController.create);
     }
 }
 const permissRoutes = new PermissRoutes();

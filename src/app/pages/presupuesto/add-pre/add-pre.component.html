@@ -13,8 +13,8 @@
         <th scope="col">Cantidad</th>
         <th scope="col">Bs</th>
         <th scope="col">Usd</th>
-        <th scope="col">Eliminar</th>
         <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
       </tr>
     </thead>
     <tbody>
@@ -23,8 +23,12 @@
         <td style="padding-left:38px">{{item.stock}}</td>
         <td>{{(item.price) | convertBs}}</td>
         <td>{{item.price2 | currency}}</td>
-        <button class="no-class text-danger" (click)="openDialog(item)"><td style="padding-left:25px">x</td></button>
-        <td><a href="#" class="text-warning" (click)="editStock(item.id, item.stock, item)"><i class="material-icons">create</i></a></td>
+        <td style="padding-left:22px">
+          <a href="#" class="text-warning" (click)="editStock(item.id, item.stock, item)">
+            <i class="material-icons">create</i>
+          </a>
+        </td>
+        <button class="no-class text-danger" (click)="openDialog(item)"><td style="padding-left:28px">x</td></button>
       </tr>
     </tbody>
   </table>

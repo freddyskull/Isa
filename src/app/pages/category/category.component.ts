@@ -28,6 +28,8 @@ export class CategoryComponent implements OnInit {
   order: string = 'name';
   reverse: boolean = false;
   catName: string = ''
+  pdf:boolean = true;
+  aux:string = "2"
   constructor(private serv: ProductService,private excel: ExcelFormatsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -219,25 +221,26 @@ export class CategoryComponent implements OnInit {
    ExportToExcel(){
     this.excel.exportToExcel(this.arrayExcel,'Lista de precios ' + this.fecha() + ' categoria ' + this.catName)
   }
-  public captureScreen()  
-  {  
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 220;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let doc = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      var logo = new Image();
-      logo.src = './assets/img/LogoPDF.png';
-      doc.addImage(logo, 'PNG', 10, 10, 40, 20)
-      doc.setFontSize(12)
-      doc.text(`Inventario del dia: ${this.fecha()}` , 74, 28)  
-      doc.addImage(contentDataURL, 'PNG', 5, 32, imgWidth, imgHeight)  
-      doc.save(`Lista de precios dia ${this.fecha()} categoria ${this.catName}.pdf`); // Generated PDF   
-    });  
+  public captureScreen(option:string) {  
+    this.aux = option
+    setTimeout(()=>{
+      var data = document.getElementById('contentToConvert');  
+      html2canvas(data).then(canvas => {  
+        // Few necessary setting options  
+        var imgWidth = 150;   
+        var pageHeight = 295;    
+        var imgHeight = canvas.height * imgWidth / canvas.width;  
+        var heightLeft = imgHeight;  
+        const contentDataURL = canvas.toDataURL('image/png')  
+        let doc = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+        var logo = new Image();
+        logo.src = './assets/img/LogoPDF.png';
+        doc.addImage(logo, 'PNG', 10, 10, 40, 20)
+        doc.setFontSize(12)
+        doc.addImage(contentDataURL, 'PNG', 30, 35, imgWidth, imgHeight)  
+        doc.save(`Lista de precios dia ${this.fecha()} categoria ${this.catName}.pdf`); // Generated PDF   
+      }); 
+    },2000); 
   }  
 
 

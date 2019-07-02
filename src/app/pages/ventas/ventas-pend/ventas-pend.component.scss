@@ -1,45 +1,44 @@
-input[type=checkbox]{
-	height: 0;
-	width: 0;
-	visibility: hidden;
+table {
+	width: 100%;
+	th, td{
+		color: rgb(157, 157, 158);
+	}
 }
-
-label {
+thead th {
 	cursor: pointer;
-	text-indent: -9999px;
-	width: 60px;
-	height: 30px;
-	background: grey;
-	display: block;
-	border-radius: 100px;
-	position: relative;
-}
+	margin-right: 15px;
+	margin-left: 15px;
+  
+	span {
+	  visibility: hidden;
+	}
+  
+	&.active {
+	  color: rgb(231, 229, 229);
+  
+	  span {
+		visibility: visible;
+	  }
+	}
+  }
 
-label:after {
-	content: '';
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 30px;
-	height: 20px;
-	background: #fff;
-	border-radius: 90px;
-	transition: 0.3s;
-}
-
-input:checked + label {
-	background: #9b26be;
-}
-
-input:checked + label:after {
-	left: calc(100% - 5px);
-	transform: translateX(-100%);
-}
-
-label:active:after {
-	width: 50px;
-}
-
+  .filter{
+		color: #9b26be;
+  }
+  
+  th.mat-sort-header-sorted {
+	color: black;
+  }
+  input{
+	text-align: center;
+	font-size: 1rem
+  }
+  label{
+	font-size: 2rem;
+  }
+  .mat-sort-header,.mat-header-cell{
+	padding-left: 55px;
+  }
 // centering
 body {
 	display: flex;
@@ -59,14 +58,3 @@ body {
 		color: #9b26be;
 	}
 }
-table {
-	width: 100%;
-	th{
-		text-align: center;
-	}
-  }
-  mat-tab{
-	  label{
-		  color: #fff;
-	  }
-  }

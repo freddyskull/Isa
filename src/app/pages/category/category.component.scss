@@ -97,17 +97,21 @@ li{
     
 }
 .tablee2  {
+    margin: 40px;
     th{
-        padding-right: 100px;
+        padding-right: 60px;
+        padding-left: 60px;
         color: #1a2035;
         font-weight: bold;
         font-size: 15px;
-       
+        border-top: #1a2035 1.5px solid;
+        border-bottom: #1a2035 1.5px solid;
     }
     td{ 
-      padding-right: 100px;
+        padding-right: 60px;
+        padding-left: 60px;
       color: #1a2035;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 15px;
     }     
 }

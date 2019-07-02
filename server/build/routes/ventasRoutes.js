@@ -9,6 +9,8 @@ class VentasRoutes {
     }
     config() {
         this.router.get('/', ventasController_1.ventasController.list);
+        this.router.get('/statAct', ventasController_1.ventasController.estadAct);
+        this.router.get('/statAnt', ventasController_1.ventasController.estadAnt);
         this.router.get('/:id', ventasController_1.ventasController.getOne);
         this.router.post('/', ventasController_1.ventasController.create);
         this.router.put('/:id', ventasController_1.ventasController.update);
