@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/dialog/confirm-dialog/confirm-dialog.component'
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConvertBsPipe} from '../../pipes/bsPipes/convert-bs.pipe';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
   selector: 'app-category',
@@ -33,7 +34,7 @@ export class CategoryComponent implements OnInit {
   pdf:boolean = true;
   aux:string = "2"
   permiss: number;
-  constructor(private serv: ProductService,private excel: ExcelFormatsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private serv: ProductService,private excel: ExcelFormatsService, public dialog: MatDialog, private _snackBar: MatSnackBar, private orderPipe: OrderPipe) { }
 
   ngOnInit() {
     this.getCategory()
@@ -231,7 +232,9 @@ export class CategoryComponent implements OnInit {
    }
   
    ExportToExcel(){
-    this.excel.exportToExcel(this.arrayExcel,'Lista de precios ' + this.fecha() + ' categoria ' + this.catName)
+    var newJson = this.orderPipe.transform(this.arrayExcel, 'Nombre')
+    console.log(newJson)
+    this.excel.exportToExcel(newJson,'Lista de precios ' + this.fecha() + ' categoria ' + this.catName)
   }
   public captureScreen(option:string) {  
     this.aux = option

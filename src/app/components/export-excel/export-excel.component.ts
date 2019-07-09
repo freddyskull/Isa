@@ -28,7 +28,7 @@ export class ExportExcelComponent implements OnInit {
   
 
   ExportToExcel(){
-    this.newArry = this.orderPipe.transform(this.arrayExcel, 'info.name');
+    this.newArry = this.orderPipe.transform(this.arrayExcel, 'Nombre');
     this.excel.exportToExcel(this.newArry,'Lista de precios ' + this.fecha())
   }
 

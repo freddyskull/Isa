@@ -34,6 +34,18 @@
         </a>
       </li>
       <li class="nav-item animated fadeIn" *ngIf="position == 'jefe' || position == 'empleado'">
+        <a class="nav-link" [routerLink]="['/proveedores']" routerLinkActive="router-link-active">
+          <i class="material-icons">supervisor_account</i>
+          <p>Proveedores</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe'">
+        <a class="nav-link" [routerLink]="['/empleados']" routerLinkActive="router-link-active">
+          <i class="material-icons">wc</i>
+          <p>Empleados</p>
+        </a>
+      </li>
+      <li class="nav-item animated fadeIn" *ngIf="position == 'jefe' || position == 'empleado'">
         <a class="nav-link" [routerLink]="['/presupuestos']" routerLinkActive="router-link-active">
           <i class="material-icons">event_note</i>
           <p><small>Presupuesto & facturación</small></p>
