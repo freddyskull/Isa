@@ -29,14 +29,14 @@ html {
 Stark Industries Logo
 ========================================= */
 #logo {
-  animation: logo-entry 4s ease-in;
+  
   width: 500px;
   margin: 0 auto;
   position: relative;
   z-index: 40; }
 
 h1 {
-  animation: text-glow 2s ease-out infinite alternate;
+  
   font-family: 'Ubuntu', sans-serif;
   color: #9b0aa8;
   font-size: 48px;
@@ -46,7 +46,7 @@ h1 {
   text-shadow: 0 0 10px #000, 0 0 20px #000, 0 0 30px #000, 0 0 40px #000, 0 0 50px #000, 0 0 60px #000, 0 0 70px #000;
   top: 50px; }
   h1:before {
-    animation: before-glow 2s ease-out infinite alternate;
+    
     border-left: 535px solid transparent;
     border-bottom: 10px solid #9b0aa8;
     content: ' ';
@@ -56,7 +56,7 @@ h1 {
     top: -10px;
     width: 0; }
   h1:after {
-    animation: after-glow 2s ease-out infinite alternate;
+   
     border-left: 100px solid transparent;
     border-top: 16px solid #9e00a4;
     content: ' ';
@@ -71,11 +71,11 @@ h1 {
 Log in form
 ========================================= */
 #fade-box {
-  animation: input-entry 3s ease-in;
+  
   z-index: 4; }
 
 .stark-login form {
-  animation: form-entry 3s ease-in-out;
+  
   background: #111;
   background: linear-gradient(#470047, #111111);
   border: 6px solid #9e00a4;
@@ -111,7 +111,7 @@ Log in form
   text-shadow: 0 -1px 0 #000;
   width: 400px; }
 .stark-login input:focus {
-  animation: box-glow 1s ease-out infinite alternate;
+  
   background: #0B4252;
   background: linear-gradient(#333933, #222922);
   border-color: #ca428d;
@@ -122,7 +122,7 @@ Log in form
   border: 2px solid rgb(153, 28, 179);
   box-shadow: 0 0 5px rgba(255, 0, 0, 0.2), inset 0 0 5px rgba(255, 0, 0, 0.1), 0 2px 0 black; }
 .stark-login button {
-  animation: input-entry 3s ease-in;
+  
   background: #222;
   background: linear-gradient(#333333, #222222);
   box-sizing: content-box;
@@ -160,7 +160,7 @@ Log in form
 Spinner
 ========================================= */
 #circle1 {
-  animation: circle1 4s linear infinite, circle-entry 6s ease-in-out;
+  
   background: #000;
   border-radius: 50%;
   border: 10px solid #a400a4;
@@ -203,7 +203,7 @@ Spinner
 Hexagon Mesh
 ========================================= */
 .hexagons {
-  animation: logo-entry 4s ease-in;
+  
   color: #000;
   font-size: 52px;
   font-size: 5.1rem;
