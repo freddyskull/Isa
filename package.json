@@ -15,7 +15,7 @@
     "electro": "electron .",
     "pack": "build --dir",
     "dist": "ng build --prod",
-    "exe": "electron-packager . --platform=win32"
+    "exe": "ng build && electron-packager . --platform=win32"
   },
   "private": true,
   "dependencies": {
@@ -39,7 +39,6 @@
     "jquery": "^3.4.0",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.1.1",
-    "ng2-toastr": "^4.1.2",
     "ngx-pagination": "^3.2.1",
     "rxjs": "~6.3.3",
     "sweetalert2": "^8.10.0",

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ExcelFormatsService } from '../../services/exportExcel/excel-formats.service'
 import {MatTableDataSource} from '@angular/material/table';
-
+import { OrderPipe } from 'ngx-order-pipe';
 @Component({
   selector: 'app-export-excel',
   templateUrl: './export-excel.component.html',
@@ -9,7 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ExportExcelComponent implements OnInit {
 
-  constructor(private excel: ExcelFormatsService) { }
+  constructor(private excel: ExcelFormatsService, private orderPipe: OrderPipe) { }
   @Input()arrayExcel;
   newArry:any=[];
   ngOnInit() {
@@ -28,7 +28,8 @@ export class ExportExcelComponent implements OnInit {
   
 
   ExportToExcel(){
-    this.excel.exportToExcel(this.arrayExcel,'Lista de precios ' + this.fecha())
+    this.newArry = this.orderPipe.transform(this.arrayExcel, 'info.name');
+    this.excel.exportToExcel(this.newArry,'Lista de precios ' + this.fecha())
   }
 
 }

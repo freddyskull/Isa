@@ -4,7 +4,9 @@
 /dist
 /tmp
 /out-tsc
-
+/isa-win32-x64
+/isa-win32-x32
+/isa-win32-x64.rar
 # dependencies
 /node_modules
 

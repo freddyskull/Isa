@@ -60,7 +60,6 @@ export class ListProductComponent implements OnInit {
 
   getArrExcel(){
    let Usd = 0
-
    this.serv.getUsdValor().subscribe(
     req => {
       this.Usd = Object.values(req)[0].priceUSD;

@@ -78,7 +78,7 @@
     <div class="text-center mt-5">
        <div *ngIf="categorias">
             <div *ngIf="position == 'jefe' || position == 'empleado'"  >
-                <a routerLink="/categorias/agregar"><p class="add mt-4 animated fadeIn">AGREGAR NUEVA CATEGORÍA</p> </a>
+                <a routerLink="/categorias/agregar" *ngIf="permiss == 1 || position == 'jefe'"><p class="add mt-4 animated fadeIn">AGREGAR NUEVA CATEGORÍA</p> </a>
             </div>
             <div class="col-md-12">
                 <div class="form-group container">
@@ -150,8 +150,8 @@
                     <th> <strong>Precio Bs</strong> </th>
                     <th> <strong>Precio USD</strong> </th>
                     <th> <strong>Fecha V</strong> </th>
-                    <th> <strong>Editar</strong> </th>
-                    <th> <strong>Eliminar</strong> </th>
+                    <th *ngIf="permiss == 1 || position == 'jefe'"> <strong>Editar</strong> </th>
+                    <th *ngIf="permiss == 1 || position == 'jefe'"> <strong>Eliminar</strong> </th>
                 </thead>
                 <tbody *ngFor="let item of search | orderBy: order:reverse:'case-insensitive'">
                 <tr>
@@ -162,8 +162,8 @@
                     <td *ngIf="item.priceB == 0">{{item.priceS$ * Usd | convertBs}} </td>
                     <td *ngIf="item.priceB == 0">{{item.priceS$ | currency}} </td>
                     <td> {{item.fecven}} </td> 
-                    <td> <button class="btn btn-sm btn-warning"  [routerLink]="['/productos/editar',item.id]"><i class="material-icons">create</i></button> </td>
-                    <td> 
+                    <td *ngIf="permiss == 1 || position == 'jefe'"> <button class="btn btn-sm btn-warning"  [routerLink]="['/productos/editar',item.id]"><i class="material-icons">create</i></button> </td>
+                    <td *ngIf="permiss == 1 || position == 'jefe'"> 
                         <button class="btn btn-sm btn-danger" (click)="openDialog(item.id)"> 
                             <i class="material-icons">delete</i>
                         </button>
@@ -183,7 +183,7 @@
         <th> <strong>Precio USD</strong> </th>
         <th> <strong>Fecha V</strong> </th> 
     </thead>
-    <tbody *ngFor="let item of search">
+    <tbody *ngFor="let item of search | orderBy:order:reverse:'case-insensitive'">
     <tr>
         <td>{{item.stock}} </td>
         <td>{{item.name}}</td>
@@ -202,7 +202,7 @@
         <th> <strong>Precio Bs</strong> </th>
         <th> <strong>Fecha V</strong> </th> 
     </thead>
-    <tbody *ngFor="let item of search">
+    <tbody *ngFor="let item of search | orderBy:order:reverse:'case-insensitive' ">
     <tr>
         <td>{{item.stock}} </td>
         <td>{{item.name}}</td>
@@ -219,7 +219,7 @@
         <th> <strong>Precio USD</strong> </th>
         <th> <strong>Fecha V</strong> </th> 
     </thead>
-    <tbody *ngFor="let item of search">
+    <tbody *ngFor="let item of search | orderBy:order:reverse:'case-insensitive'">
     <tr>
         <td>{{item.stock}} </td>
         <td>{{item.name}}</td>
@@ -231,8 +231,6 @@
 </table> 
 
 
-            
-   {{aux}} 
 
 
 

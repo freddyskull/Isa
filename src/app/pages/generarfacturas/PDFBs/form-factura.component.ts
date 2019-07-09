@@ -6,7 +6,7 @@ import { pend } from '../../../models/pendientesModel';
 import * as jsPDF from 'jspdf'; 
 import html2canvas from 'html2canvas'; 
 import {  Router } from '@angular/router';
-
+import {ConvertBsPipe} from '../../../pipes/bsPipes/convert-bs.pipe';
 @Component({
   selector: 'app-factura',
   templateUrl: './form-factura.component.html',
@@ -308,25 +308,25 @@ export class FormFacturaComponent implements OnInit {
     //cierre de tabla
     if(this.metodo == 'Bs'){//este obviamente evalua si es en bolivares
       if(this.tipoDV == true){ // este if evalua si la compra es al mayor o al detal
-      doc.text(120, 170,`SUB-TOTAL BS. S: ${Math.round(this.subTotal).toLocaleString()}`)
-      doc.text(120, 180,`MONTO TOTAL BASE IMPONIBLE AL 16% BS.S ${Math.round(this.montoIv).toLocaleString()}`)
-      doc.text(120, 190,`MONTO TOTAL EXONERADO O EXENTO DE IVA BS.S ${Math.round(this.montoEx).toLocaleString()}`)
+      doc.text(120, 170,`SUB-TOTAL BS. S: ${ConvertBsPipe.prototype.transform(this.subTotal)}`)
+      doc.text(120, 180,`MONTO TOTAL BASE IMPONIBLE AL 16% BS.S ${ConvertBsPipe.prototype.transform(this.montoIv)}`)
+      doc.text(120, 190,`MONTO TOTAL EXONERADO O EXENTO DE IVA BS.S ${ConvertBsPipe.prototype.transform(this.montoEx)}`)
       doc.text(120, 200,`MONTO TOTAL DE I.V.A AL 16 % BS.S `)
       doc.setFontType("bold");
       doc.setFontSize(10)
-      doc.text(120, 210,`MONTO TOTAL A PAGAR BS.S: ${Math.round(this.montoTo).toLocaleString()}`)
+      doc.text(120, 210,`MONTO TOTAL A PAGAR BS.S: ${ConvertBsPipe.prototype.transform(this.montoTo)}`)
       }else{// si la venta es al detal solo se le aumenta el 10%
       var res5 = this.subTotal * 1.10
-      doc.text(120, 170,`SUB-TOTAL BS. S: ${res5.toLocaleString()}`)
+      doc.text(120, 170,`SUB-TOTAL BS. S: ${res5}`)
       var res4 = this.montoIv * 1.10
-      doc.text(120, 180,`MONTO TOTAL BASE IMPONIBLE AL 16% BS.S ${Math.round(res4).toLocaleString()}`)
+      doc.text(120, 180,`MONTO TOTAL BASE IMPONIBLE AL 16% BS.S ${ConvertBsPipe.prototype.transform(res4)}`)
       var res3 = this.montoEx * 1.10
-      doc.text(120, 190,`MONTO TOTAL EXONERADO O EXENTO DE IVA BS.S ${Math.round(res3).toLocaleString()}`)
+      doc.text(120, 190,`MONTO TOTAL EXONERADO O EXENTO DE IVA BS.S ${ConvertBsPipe.prototype.transform(res3)}`)
       doc.text(120, 200,`MONTO TOTAL DE I.V.A AL 16 % BS.S `)
       doc.setFontType("bold");
       doc.setFontSize(10)
       let res = res5 + res4
-      doc.text(120, 210,`MONTO TOTAL A PAGAR BS.S: ${Math.round(res).toLocaleString()}`)
+      doc.text(120, 210,`MONTO TOTAL A PAGAR BS.S: ${ConvertBsPipe.prototype.transform(res)}`)
       }
     }else{
     doc.setFontType("bold");
@@ -389,48 +389,47 @@ export class FormFacturaComponent implements OnInit {
       var heightLeft = imgHeight;  
       const contentDataURL = canvas.toDataURL('image/png')
       doc.setLineWidth(0.1)
-      doc.line(120, 42.5, 120, 57.5)//lineas inicio
-      doc.line(162, 57.5, 162, 42)//lineas medio
-      doc.line(198.2, 42.5, 198.2, 57.5) //lineas final
-      doc.setFontSize(10);
+      doc.line(120, 47.5, 120, 57.5)//lineas inicio
+      doc.line(162, 57.5, 162, 47)//lineas medio
+      doc.line(198.2, 47.5, 198.2, 57.5) //lineas final
+      doc.setFontSize(12);
       doc.setFontType("bold")
-      doc.setFontSize(8);
-      doc.text(120, 42, '__________________________________________________')
       doc.text(122, 46, 'FACTURA NRO')
-      doc.text(164, 46, ''+this.factura )
+      doc.text(155, 46, '' + this.factura )
+      doc.setFontSize(8);
       doc.text(120, 47, '__________________________________________________')
       doc.text(122, 51, 'LUGAR DE EMISIÓN                            DIA-MES-AÑO ' )
       doc.text(120, 52, '__________________________________________________')
       doc.text(122, 56, `SANTA ANA DE CORO               ${this.fecha()}` )
       doc.text(120, 57, '__________________________________________________')
       doc.setFontSize(8);
-      doc.text(20, 62, 'NOMBRE Y APELLIDO O RAZÓN SOCIAL:')
+      doc.text(20, 62, 'NOMBRE Y APELLIDO O RAZÓN SOCIAL')
       doc.setFontSize(12)
       doc.setFontType("normal")
-      doc.text(20, 66.5, ''+ this.nombre )
+      doc.text(20, 66, ''+ this.nombre )
       doc.setFontSize(10)
       doc.setFontType("bold")
-      doc.text(20, 70, 'DIRECCIÓN FISCAL:')
+      doc.text(20, 70, 'DIRECCIÓN FISCAL')
       doc.setFontType("normal")
-      doc.setFontSize(7)
-      doc.text(20, 73, ''+ this.direccion  )
-      doc.text(20, 75.5, ''+ this.direccion2  )
+      doc.setFontSize(8.5)
+      doc.text(20, 73.5, ''+ this.direccion  )
+      doc.text(20, 76.5, ''+ this.direccion2  )
       doc.setFontSize(10)
       doc.setFontType("bold")
-      doc.text(128, 62, 'RIF/C.I: ' )
+      doc.text(128, 62, 'RIF/C.I ' )
       doc.setFontType("normal")
       doc.text(128, 66, ''+ this.cedula   )
       doc.text(128, 67, '_________________')
       doc.setFontType("bold")
-      doc.text(128, 72, 'NRO. DE CONTACTO: ' )
+      doc.text(128, 72, 'NRO. DE CONTACTO ' )
       doc.setFontType("normal")
-      doc.text(128, 75, '' + this.contacto )
+      doc.text(128, 75.2, '' + this.contacto )
       doc.setFontType("bold")
-      doc.text(20, 79, 'VENDEDOR:' + this.vendedor )
-      doc.text(128, 79, 'CONDICIONES DE PAGO: ')
+      doc.text(20, 82, 'VENDEDOR:' + this.vendedor )
+      doc.text(128, 82, 'CONDICIONES DE PAGO ')
       doc.setFontSize(8)
       doc.setFontType("normal")
-      doc.text(172, 79, '' + this.condic)
+      doc.text(172, 82, '' + this.condic)
       //tabla
       doc.addImage(contentDataURL, 'PNG', 20, 84, imgWidth, imgHeight) 
       //cierre de tabla
@@ -439,35 +438,35 @@ export class FormFacturaComponent implements OnInit {
         if(this.tipoDV == true){ // este if evalua si la compra es al mayor o al detal
           doc.text(160, 172.5,  '_________________')
           doc.text(130, 177, 'SUB-TOTAL BS.S ' )
-          doc.text(166, 177, '' + Math.round(this.subTotal).toLocaleString() )
+          doc.text(166, 177, '' + ConvertBsPipe.prototype.transform(this.subTotal) )
           doc.text(84.5, 180.5,' MONTO TOTAL BASE IMPONIBLE 16% BS.S ' )
-          doc.text(166, 180.5, ''+ Math.round(this.montoIv).toLocaleString() )
+          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoIv) )
           doc.text(88, 184,'MONTO TOTAL EXONERADO DE IVA BS.S '  )
-          doc.text(166, 184, '' + Math.round(this.montoEx).toLocaleString() )
+          doc.text(166, 184, '' + ConvertBsPipe.prototype.transform(this.montoEx) )
           var IvaTot = (this.montoTo - this.montoEx)
           doc.text(102, 187.5,'MONTO TOTAL I.V.A AL 16% BS.S ' )
-          doc.text(166, 187.5, '' + Math.round(IvaTot).toLocaleString() )
+          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(IvaTot) )
           doc.setFontType("bold")
           doc.text(106.5, 191,'MONTO TOTAL A PAGAR BS.S ' )
-          doc.text(166, 191, '' + Math.round(this.montoTo).toLocaleString() )
+          doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(this.montoTo) )
           doc.setFontType("normal")
           doc.text(160, 192,  '_________________')
         }else{
           doc.text(160, 172.5,  '_________________')
           doc.text(130, 177, 'SUB-TOTAL BS.S ' )
-          doc.text(166, 177, ''  + Math.round(this.subTotal * 1.10).toLocaleString() )
+          doc.text(166, 177, ''  + ConvertBsPipe.prototype.transform(this.subTotal * 1.10) )
           doc.text(84.5, 180.5,' MONTO TOTAL BASE IMPONIBLE 16% BS.S ' )
-          doc.text(166, 180.5, ''+ Math.round(this.montoIv * 1.10).toLocaleString() )
+          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoIv * 1.10))
           var exo = this.montoEx * 1.10
           var tot = this.montoTo * 1.10
           doc.text(88, 184,   'MONTO TOTAL EXONERADO DE IVA BS.S '  )
-          doc.text(166, 184, '' + Math.round(exo).toLocaleString() )
+          doc.text(166, 184, '' + ConvertBsPipe.prototype.transform(exo) )
           var IvaTot = (tot - exo)
           doc.text(102, 187.5,'MONTO TOTAL I.V.A AL 16% BS.S ' )
-          doc.text(166, 187.5, '' + Math.round(IvaTot).toLocaleString() )
+          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(IvaTot) )
           doc.setFontType("bold")
-          doc.text(106.5, 191,'MONTO TOTAL A PAGAR BS.S ' )
-          doc.text(166, 191, '' + Math.round(tot).toLocaleString() )
+          doc.text(106, 191,'MONTO TOTAL A PAGAR BS.S ' )
+          doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(tot) )
           doc.text(160, 192,  '_________________')
         }
       }else{
@@ -486,18 +485,18 @@ export class FormFacturaComponent implements OnInit {
         doc.text(20, 176,'FORMA DE PAGO')
       }
       if(this.efectivo > 0){
-        doc.text(20, 178,'EFECTIVO ' + this.efectivo.toLocaleString())
+        doc.text(20, 178,'EFECTIVO ' + this.efectivo.toLocaleString()+ ",00")
       }
       if(this.cheque > 0){
-        doc.text(100, 178,'CHEQUE ' + this.cheque.toLocaleString())
+        doc.text(100, 178,'CHEQUE ' + this.cheque.toLocaleString()+ ",00")
       }
       if(this.transferencia > 0){
         var tra = this.transferencia
-        doc.text(20, 181,'TRANSFERENCIA: ' + tra.toLocaleString())
+        doc.text(20, 181,'TRANSFERENCIA: ' + tra.toLocaleString()+ ",00")
       }
       if(this.deposito > 0){
       var tra = this.transferencia
-      doc.text(20, 184,'DEPOSITO: ' + this.deposito.toLocaleString())
+      doc.text(20, 184,'DEPOSITO: ' + this.deposito.toLocaleString()+ ",00")
       }
       doc.text(119.5, 200,'ORIGEN DEL PEDIDO NRO')
       doc.text(175, 200,'' + this.origen )

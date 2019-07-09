@@ -6,6 +6,8 @@ import html2canvas from 'html2canvas';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/dialog/confirm-dialog/confirm-dialog.component'
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ConvertBsPipe} from '../../pipes/bsPipes/convert-bs.pipe';
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -30,12 +32,14 @@ export class CategoryComponent implements OnInit {
   catName: string = ''
   pdf:boolean = true;
   aux:string = "2"
+  permiss: number;
   constructor(private serv: ProductService,private excel: ExcelFormatsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getCategory()
     this.GetUsd()
     this.position = localStorage.getItem("position")
+    this.getPermiss()
   }
 
   setOrder(value: string) {
@@ -44,6 +48,14 @@ export class CategoryComponent implements OnInit {
     }
     this.order = value;
     return false;
+  }
+
+  getPermiss(){
+    this.serv.getPermiss().subscribe(
+      req => {
+       this.permiss = Object.values(req)[0].editperm
+      }
+    )
   }
 
   fecha(){
@@ -117,7 +129,7 @@ export class CategoryComponent implements OnInit {
            this.arrayExcel[j] = { 
              Nombre:res[i].name,
              Cantidad:res[i].stock,
-             PrecioBs:Math.round(res[i].priceS),
+             PrecioBs:ConvertBsPipe.prototype.transform(res[i].priceS),
              FechaV:res[i].fecven,
              Marca:res[i].marca,
            }
@@ -125,7 +137,7 @@ export class CategoryComponent implements OnInit {
            this.arrayExcel[j] = { 
              Nombre:res[i].name,
              Cantidad:res[i].stock,
-             PrecioBs:(res[i].priceS$ * Usd),
+             PrecioBs:ConvertBsPipe.prototype.transform(res[i].priceS$ * Usd),
              FechaV:res[i].fecven,
              Marca:res[i].marca,
              }

@@ -8,6 +8,9 @@
             <input type="text" autocomplete="off" name="username" placeholder="Usuario" required [(ngModel)]="name">
               <input type="password" utocomplete="off" placeholder="contraseña" name="pass" [(ngModel)]="pass" required> 
                 <button type="submit">ACCEDER</button> 
+                <div class="text-center animated fadeIn" *ngIf="aux">
+                  <h2 class="error">Clave o contraseña invalida</h2>
+                </div>
               </div>
           </form>
             <div class="hexagons">

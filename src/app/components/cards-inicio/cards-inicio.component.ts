@@ -76,7 +76,6 @@ getTotAct(){
       var ult = Object.keys(req).length;
       for (let i = 0; i < ult; i++) {
         if(req[i].tipo == "Bs"){
-          console.log(req[i].total)
           this.BsTot += req[i].total 
         }else{
           this.UsdTot += req[i].total 
@@ -93,7 +92,6 @@ getTotAnt(){
       var ult = Object.keys(req).length;
       for (let i = 0; i < ult; i++) {
         if(req[i].tipo == "Bs"){
-          console.log(req[i].total)
           this.BsTotAnt += req[i].total 
         }else{
           this.UsdTotAnt += req[i].total 
@@ -107,7 +105,7 @@ getTotAnt(){
   update(form:NgForm){
     if(form.valid == true && this.priceUSD.priceUSD > 0){
       this.serv.updateUsdValor(0,this.priceUSD).subscribe(
-        req =>{ console.log(req)
+        req =>{
           this.serv.getUsdValor().subscribe(
             req => {
               this.USD = Object.values(req)[0].priceUSD
@@ -135,8 +133,7 @@ getTotAnt(){
     this.openSnackBar(this.inputPermiss)
     this.serv.updatePermiss(1,this.permiss).subscribe(
       req => {
-        console.log(this.permiss)
-        console.log(this.inputPermiss)
+        
       }
     )
   }

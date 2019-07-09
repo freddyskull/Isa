@@ -25,7 +25,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
   getUser(){
     this.serv.getUsers().subscribe(
-      req => { this.users = req } 
+      req => { this.users = req },
+      err => console.error(err)
     )
   }
 
@@ -41,12 +42,18 @@ import {MatSnackBar} from '@angular/material/snack-bar';
           console.log(localStorage.getItem("acceso"));
           this.route.navigate(['/inicio'])
           this.reset()
+        }else{
+          this.aux = true;
+          setTimeout(()=>{
+            this.aux = false;
+          },3000);
+          
         }
       } 
     }else{
       this.snackBar.open('Formulario Vacio','', {
-        duration: 2000,
-      });;
+        duration: 3000,
+      });
     }
   }
   reset(){

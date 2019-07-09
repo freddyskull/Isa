@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConvertBsPipe implements PipeTransform {
 
   transform(value: any): any {
-    return (Math.round(value)).toLocaleString()
+    if(value == 0){
+      return ""
+    }else{
+      return (Math.round(value)).toLocaleString() + ",00"
+    }
   }
 
 }
