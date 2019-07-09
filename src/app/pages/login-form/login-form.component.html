@@ -9,6 +9,9 @@
             <input type="password" utocomplete="off" placeholder="contraseña" name="pass" [(ngModel)]="pass" required> 
               <button type="submit">ACCEDER</button> 
             </div>
+            <div class="text-center error" *ngIf="aux">
+              <h2>Usuario o clave invalida</h2>
+            </div>
         </form>
           <div class="hexagons">
             <span>&#x2B22;</span>

@@ -90,8 +90,9 @@
                 <div class="row mt-5">
                     <div class="col-md-12 text-center ">
                       <div class="form-group">
+                        <p class="bmd-label-floating">Click en la cabecera de la tabla si deseea activar los filtros, esta tabla es filtrable en nombre, fecha de vencimineto y ultima actualización.</p>
                         <label class="bmd-label-floating">Buscar registro en Historial de Productos</label>
-                        <input type="text" autofocus autocomplete="off" class="form-control text-center" name="filter" [(ngModel)]="filter">
+                        <input type="text" autofocus placeholder="Buscar..." autocomplete="off" class="form-control text-center" name="filter" [(ngModel)]="filter">
                       </div>
                     </div>
                   <table  class="table">
@@ -116,7 +117,7 @@
                       </th>
                       <th>Precio Bs</th>
                       <th>Precio Usd</th>
-                
+                      <th>Editar</th>
                   
                   <!-- <th [class.active]="order === 'info.number'"
                       (click)="setOrder('info.number')"
@@ -141,6 +142,7 @@
                       <td *ngIf="item.priceS == 0">{{item.priceS$ * Usd  | convertBs}}</td>
                       <td *ngIf="item.priceS$ != 0">{{item.priceS$       | currency}}</td>
                       <td *ngIf="item.priceS$ == 0">{{item.priceS$ / Usd | currency}}</td>
+                      <td> <button class="btn btn-sm btn-warning"  [routerLink]="['/productos/editar',item.id]"><i class="material-icons">create</i></button> </td>
                     </tbody>
                   </table>
                 </div>  

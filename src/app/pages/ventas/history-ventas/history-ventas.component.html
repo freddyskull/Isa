@@ -2,8 +2,9 @@
 
   <div class="col-md-12 text-center ">
       <div class="form-group">
+        <p class="bmd-label-floating">Click en la cabecera de la tabla si deseea activar los , esta tabla es filtrable por fecha, estado, origen del pedido y número de factura.</p>
         <label class="bmd-label-floating">Buscar registro en Historial de Ventas</label>
-        <input type="text" autofocus  matInput (keyup)="applyFilter($event.target.value)" autocomplete="off" class="form-control">
+        <input type="text" autofocus  matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar.." autocomplete="off" class="form-control">
       </div>
   </div>
     <table  mat-table [dataSource]="dataSource" matSort class="table mat-elevation-z8" multiTemplateDataRows>

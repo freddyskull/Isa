@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../services/product.service'
+import { ProductService } from '../../services/product.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
@@ -8,7 +9,7 @@ import { ProductService } from '../../services/product.service'
 })
 export class EditProductComponent implements OnInit {
 
-  constructor(private actived: ActivatedRoute, private rout: Router,private serv: ProductService) { }
+  constructor(private actived: ActivatedRoute, private rout: Router,private serv: ProductService, private location: Location) { }
 
 
   category:any = [];
@@ -46,7 +47,7 @@ export class EditProductComponent implements OnInit {
       }
       this.serv.updateProduct(this.product.id, this.product).subscribe(
         req =>{
-          this.rout.navigate(['/productos'])
+          this.location.back();
         },
         err => console.error(err)
       )
