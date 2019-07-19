@@ -7,6 +7,10 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'; 
 import {  Router } from '@angular/router';
 import {ConvertBsPipe} from '../../../pipes/bsPipes/convert-bs.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmFacNotaComponent } from '../../../components/dialog/confirm-fac-nota/confirm-fac-nota.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-factura',
   templateUrl: './form-factura.component.html',
@@ -15,7 +19,7 @@ import {ConvertBsPipe} from '../../../pipes/bsPipes/convert-bs.pipe';
 export class FormFacturaComponent implements OnInit {
   restarAAlmacen: any;
   userName:string = "";
-  constructor(private serv: ProductService, private rout: Router) { }
+  constructor(private serv: ProductService, private rout: Router, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   this.getPro()
@@ -98,6 +102,7 @@ export class FormFacturaComponent implements OnInit {
   @Input()condic;
   @Input()optionAux;
   // mas variables
+  total:string = "";
   errorForm: boolean = false;
   option: boolean = true;
   restar: any = [];
@@ -260,6 +265,7 @@ export class FormFacturaComponent implements OnInit {
             this.errorForm = false;
         },3000);
     }else{
+    let total = 0; 
     this.updateProduct()
     this.obtenerTotales()
     this.saveHistory()
@@ -375,6 +381,7 @@ export class FormFacturaComponent implements OnInit {
   }
 
   facTipoLib(){
+    
     this.updateProduct()
     this.obtenerTotales()
     this.saveHistory()
@@ -451,6 +458,7 @@ export class FormFacturaComponent implements OnInit {
           doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(this.montoTo) )
           doc.setFontType("normal")
           doc.text(160, 192,  '_________________')
+          this.total == ConvertBsPipe.prototype.transform(this.montoTo)
         }else{
           doc.text(160, 172.5,  '_________________')
           doc.text(130, 177, 'SUB-TOTAL BS.S ' )
@@ -468,15 +476,18 @@ export class FormFacturaComponent implements OnInit {
           doc.text(106, 191,'MONTO TOTAL A PAGAR BS.S ' )
           doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(tot) )
           doc.text(160, 192,  '_________________')
+          this.total == ConvertBsPipe.prototype.transform(tot)
         }
       }else{
         if(this.tipoDV == true){
           doc.setFontType("bold")
           doc.text(106.5, 191,`MONTO TOTAL A PAGAR USD: $${this.montoTo.toFixed(2)} `)
+          this.total == "$ " + this.montoTo.toFixed(2)
         }else{
           var res2 = this.montoTo * 1.10
           doc.setFontType("bold")
           doc.text(106.5, 191,`MONTO TOTAL A PAGAR USD: $${res2.toFixed(2)} `)
+          this.total == "$ " + res2.toFixed(2)
         }
       }
       doc.setFontType("normal")
@@ -485,18 +496,18 @@ export class FormFacturaComponent implements OnInit {
         doc.text(20, 176,'FORMA DE PAGO')
       }
       if(this.efectivo > 0){
-        doc.text(20, 178,'EFECTIVO ' + this.efectivo.toLocaleString()+ ",00")
+        doc.text(20, 179,'EFECTIVO ' + this.efectivo.toLocaleString()+ ",00")
       }
       if(this.cheque > 0){
-        doc.text(100, 178,'CHEQUE ' + this.cheque.toLocaleString()+ ",00")
+        doc.text(20, 190,'CHEQUE ' + this.cheque.toLocaleString()+ ",00")
       }
       if(this.transferencia > 0){
         var tra = this.transferencia
-        doc.text(20, 181,'TRANSFERENCIA: ' + tra.toLocaleString()+ ",00")
+        doc.text(20, 183,'TRANSFERENCIA: ' + tra.toLocaleString()+ ",00")
       }
       if(this.deposito > 0){
       var tra = this.transferencia
-      doc.text(20, 184,'DEPOSITO: ' + this.deposito.toLocaleString()+ ",00")
+      doc.text(20, 186,'DEPOSITO: ' + this.deposito.toLocaleString()+ ",00")
       }
       doc.text(119.5, 200,'ORIGEN DEL PEDIDO NRO')
       doc.text(175, 200,'' + this.origen )
@@ -517,6 +528,37 @@ fecha(){
   var meses = new Array ("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
   var f=new Date();
   return (f.getDate() + " DE " + meses[f.getMonth()] + " DEL " + f.getFullYear())
+}
+
+
+openDialog(tipo:boolean) {
+  let name = localStorage.getItem('name')
+  const dialogRef = this.dialog.open(ConfirmFacNotaComponent, {
+    width: '450px',
+    data: {name: `Hola ${name}`, metodo: this.metodo, condicion: this.tipoDV, total: this.total}
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(result)
+    if(result == false){
+      this.openSnackBar('La venta fué realizada y descontada, guarde su comprobante', 'Entendido');
+      if(tipo == true){
+        this.facTipoLib()
+      }else{
+        this.facturaPdf()
+      }
+      
+    }else{
+      this.openSnackBar('Por favor rectifique su venta', 'Ok')
+    }
+  });
+  
+}
+
+
+openSnackBar(message: string, action: string) {
+  this._snackBar.open(message, action, {
+    duration: 4000,
+  });
 }
 
 }

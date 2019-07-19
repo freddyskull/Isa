@@ -45,7 +45,7 @@ export class GenerarfacturasComponent implements OnInit {
   deposito:number = 0;
   transferencia:number = 0;
   efectivo:number = 0;
-  cheque:string ="";
+  cheque:number = 0;
   clients:any = [];
   client:any = [];
   option:boolean = true;
@@ -123,10 +123,45 @@ export class GenerarfacturasComponent implements OnInit {
 
   getArr(e){
     this.finArr = e;
-    console.log(this.finArr)
   }
   getArr2(e){
     this.totales = e;
+  }
+
+  cambio(tipo:number){
+    setTimeout(()=>{
+      console.log(this.tipoDV)
+      this.tipoDV == this.tipoDV
+      this.resetTipoDePago(tipo)
+    if(tipo == 1){
+      if(this.tipoDV == true){
+        this.transferencia = this.totales.subTotal
+      }else{
+        this.transferencia = this.totales.subTotal * 1.10
+      }
+    }
+    if(tipo == 2){
+      if(this.tipoDV == true){
+        this.efectivo = this.totales.subTotal
+      }else{
+        this.efectivo = this.totales.subTotal * 1.10
+      }
+    }
+    if(tipo == 3){
+      if(this.tipoDV == true){
+        this.cheque = this.totales.subTotal
+      }else{
+        this.cheque = this.totales.subTotal * 1.10
+      }
+    }
+    if(tipo == 4){
+      if(this.tipoDV == true){
+        this.deposito = this.totales.subTotal
+      }else{
+        this.deposito = this.totales.subTotal * 1.10
+      }
+    }
+    },200);
   }
   recAux(e){
     this.butons = true;
@@ -162,6 +197,34 @@ recibir(formFactura:NgForm){
     )
   }
 
+
+  resetTipoDePago(tipo){
+    if(tipo == 1){
+      // this.transferencia = 0;
+      this.efectivo = 0;
+      this.cheque = 0;
+      this.deposito = 0;
+    }
+    if(tipo == 2){
+      this.transferencia = 0;
+      // this.efectivo = 0;
+      this.cheque = 0;
+      this.deposito = 0;
+    }
+    if(tipo == 3){
+      this.transferencia = 0;
+      this.efectivo = 0;
+      // this.cheque = 0;
+      this.deposito = 0;
+    }
+    if(tipo == 4){
+      this.transferencia = 0;
+      this.efectivo = 0;
+      this.cheque = 0;
+      // this.deposito = 0;
+    }
+    this.tipoDV == this.tipoDV
+  }
   reset(){
   this.nombre = "";
   this.cedula = 0;
@@ -173,7 +236,7 @@ recibir(formFactura:NgForm){
   this.deposito = 0;
   this.transferencia = 0;
   this.efectivo = 0;
-  this.cheque = "";
+  this.cheque = 0;
   this.direccion = "";
   this.direccion2 = "";
   this.option = true;

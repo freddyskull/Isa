@@ -117,10 +117,9 @@ export class CategoryComponent implements OnInit {
   //funcion que transforma los valores para poderlos convertir a un array y volverlo a un formato excel
   getArrExcelBs(id){
     let Usd = 0
-     this.serv.getDolar().subscribe(
+    this.serv.getUsdValor().subscribe(
        req =>{
-         this.us = req;
-         Usd += this.us.USD.dolartoday;
+              Usd = Object.values(req)[0].priceUSD;
      this.serv.getProducts().subscribe(
        res => {
         let j = 1;
@@ -155,10 +154,9 @@ export class CategoryComponent implements OnInit {
 
    getArrExcel(id){
     let Usd = 0
-     this.serv.getDolar().subscribe(
-       req =>{
-         this.us = req;
-         Usd += this.us.USD.dolartoday;
+    this.serv.getUsdValor().subscribe(
+      req =>{
+             Usd = Object.values(req)[0].priceUSD;
      this.serv.getProducts().subscribe(
        res => {
         let j = 1;
@@ -195,10 +193,9 @@ export class CategoryComponent implements OnInit {
 
    getArrExcelUsd(id){
     let Usd = 0
-     this.serv.getDolar().subscribe(
-       req =>{
-         this.us = req;
-         Usd += this.us.USD.dolartoday;
+    this.serv.getUsdValor().subscribe(
+      req =>{
+             Usd = Object.values(req)[0].priceUSD;
      this.serv.getProducts().subscribe(
        res => {
         let j = 1;

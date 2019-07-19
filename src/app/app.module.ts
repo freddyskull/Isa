@@ -60,9 +60,11 @@ import { ExportExcelComponent } from './components/export-excel/export-excel.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderModule } from 'ngx-order-pipe';
 import { ConvertBsPipe } from './pipes/bsPipes/convert-bs.pipe';
+import { ConfirmFacNotaComponent } from './components/dialog/confirm-fac-nota/confirm-fac-nota.component';
 
 @NgModule({
   declarations: [
+    ConfirmFacNotaComponent,
     ExportExcelComponent,
     HistoryUserComponent,
     HistoryVentasComponent,
@@ -126,7 +128,7 @@ import { ConvertBsPipe } from './pipes/bsPipes/convert-bs.pipe';
   ],
   entryComponents: [
     ConfirmDialogComponent,
-
+    ConfirmFacNotaComponent,
     HistoryComponent,
     HistoryVentasComponent,
     HistoryVentasDialogComponent,

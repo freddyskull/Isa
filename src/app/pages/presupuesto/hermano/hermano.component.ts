@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { NgForm } from '@angular/forms';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-hermano',
@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class HermanoComponent implements OnInit {
  
-  constructor(private serv: ProductService ) { }
+  constructor(private serv: ProductService, private _snackBar: MatSnackBar ) { }
   @Input() aux;
   @Input() show;
   @Input() pr;
@@ -73,6 +73,11 @@ export class HermanoComponent implements OnInit {
 
   //esta agrega los productos sin iva al array de presupuestos
   addIvayno(canti:NgForm,nam:string,restar:number,Usd:number,bs:number,id:number,iva:number){
+   if(restar > this.pr.stock){ 
+    this._snackBar.open('No es posible introducir una cantidad mayor a la existencia de este producto, por favor rectifica', 'Ok',{
+        duration: 5000,
+      });
+   }else{
     let iv;
     //este primer if verifica si el formulario es valido
     if(canti.valid == true && restar != 0){
@@ -123,10 +128,16 @@ export class HermanoComponent implements OnInit {
         this.err2 = false;
       },4000);
      }
+    }
   }
 
   //esta función agrega los items que fueron comprados con $ al presupuesto
   addMasDol(canti:NgForm,nam:string,restar:number,Usd:number,bs:number,id:number,bs$:number,Usd$:number,iva:number){
+    if(restar > this.pr.stock){ 
+      this._snackBar.open('No es posible introducir una cantidad mayor a la existencia de este producto, por favor rectifica', 'Ok',{
+          duration: 5000,
+        });
+     }else{
     if(canti.valid == true && restar != 0){
       this.aux2 = true;
       var bsT = 0;
@@ -174,6 +185,7 @@ export class HermanoComponent implements OnInit {
         this.err2 = false;
       },4000);
      }
+    }
   }
 
 

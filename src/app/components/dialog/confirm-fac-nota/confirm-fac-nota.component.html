@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <div class="containeer">
+    <p>¿SE ENCUENTRA SEGURO DE REALIZAR ESTA VENTA? SABIENDO QUE EL TIPO DE VENTA ES: 
+    <ng-container *ngIf="data.condicion; else elseTemplate">
+        <span class="text-warning"> "Al mayor"</span>  
+    </ng-container>
+    <ng-template #elseTemplate>
+        <span class="text-warning"> "Al detal"</span>
+    </ng-template>
+      Y LA VENTA ESTÁ ECHA EN <span class="text-warning"> "{{data.metodo}}" </span> </p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" >No, dejame rectificar</button>
+  <button mat-button [mat-dialog-close]="data.description == true" cdkFocusInitial>Hacer de todas formas</button>
+</div>

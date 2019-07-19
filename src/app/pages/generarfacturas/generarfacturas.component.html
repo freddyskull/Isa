@@ -95,7 +95,7 @@
                   </div>
                   <div class="col-md-6">
                     <label class="switch">
-                        <input type="checkbox" name="swhi" [(ngModel)]="tipoDV">
+                        <input type="checkbox" name="swhi" (click)="cambio(optionAux)" [(ngModel)]="tipoDV">
                         <span class="slider"></span>
                     </label>
                     <ul class="exp">
@@ -163,24 +163,25 @@
                   <div class="col-md-3 option2">
                     <div class="form-group"  *ngIf="optionAux == 1">
                       <label class=" animated fadeIn">Transferencia</label>
-                      <input type="number" min="0" autocomplete="off" class="form-control" name="transferencia" placeholder="Indique cantidad" [(ngModel)]="transferencia">
+                      <input type="number" min="0" value="{{totales.subTotal}}" autocomplete="off" class="form-control" name="transferencia" placeholder="Indique cantidad" [(ngModel)]="transferencia">
+                      <button type="button"class="no-class" (click)="cambio(1)">rellenar</button>
                     </div>
                     <div class="form-group" *ngIf="optionAux == 2">
                       <label class=" animated fadeIn">Efectivo</label>
-                      <input type="number" min="0" autocomplete="off" class="form-control" name="efectivo" placeholder="Indique cantidad" [(ngModel)]="efectivo" >
+                      <input type="number" min="0" value="{{totales.subTotal}}" autocomplete="off" class="form-control" name="efectivo" placeholder="Indique cantidad" [(ngModel)]="efectivo" >
+                      <button type="button" class="no-class" (click)="cambio(2)">rellenar</button>
                     </div>
                     <div class="form-group"  *ngIf="optionAux == 3">
                       <label class=" animated fadeIn">Cheque</label>
-                      <input type="number" min="0" autocomplete="off" class="form-control" name="cheque"  placeholder="Indique cantidad" [(ngModel)]="cheque" >
+                      <input type="number" min="0" autocomplete="off" class="form-control" name="cheque"  placeholder="Indique cantidad" [value]="totales.subTotal" [(ngModel)]="cheque" >
+                      <button type="button" class="no-class" (click)="cambio(3)">rellenar</button>
                     </div>
                     <div class="form-group" *ngIf="optionAux == 4">
                       <label class="bmd-label-floatin animated fadeIng">Deposito</label>
-                      <input type="number" min="0" autocomplete="off" class="form-control" name="deposito" placeholder="Indique cantidad" [(ngModel)]="deposito"  >
+                      <input type="number" min="0" value="{{totales.subTotal}}" autocomplete="off" class="form-control" name="deposito" placeholder="Indique cantidad" [(ngModel)]="deposito"  >
+                      <button type="button" class="no-class" (click)="cambio(4)">rellenar</button>
                     </div>
                   </div> 
-                </div>
-                <div class="row">
-
                 </div>
                 <div class="animated fadeIn" *ngIf="butons" style="position: relative; bottom: 20px;">
                   <div class="d-inline" *ngIf="optionChoose == 1">

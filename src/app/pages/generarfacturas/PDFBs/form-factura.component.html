@@ -47,8 +47,8 @@
     </tbody>
 </table>
 
-<button type="submit" class="btn btn-primary  mt-5" value="CPTURE" *ngIf="pre.length < 15" (click)="condicVal(option == true)">generar comprobante</button>
-<button type="submit" class="btn btn-danger mt-5 ml-2" value="CPTURE" (click)="condicVal(option == false)"> PDF</button>
+<button type="submit" class="btn btn-primary  mt-5" value="CPTURE" *ngIf="pre.length < 15" (click)="openDialog(true)">generar comprobante</button>
+<button type="submit" class="btn btn-danger mt-5 ml-2" value="CPTURE" (click)="openDialog(false)"> PDF</button>
 <div class="alert alert-danger animated fadeIn" role="alert" *ngIf="errorForm">
     Error en el formulario, al parecer se encuentra vacio o los campos necesarios no están llenos
 </div>

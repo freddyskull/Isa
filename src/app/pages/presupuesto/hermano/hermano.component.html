@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="bmd-label-floating">Cantidad de medicamentos a agregar</label>
-                    <input type="number" autofocus min="1"  class="form-control" name="stock" [(ngModel)]="restar" style="font-size:2rem">
+                    <input type="number" autofocus min="1" max="{{pr.stock}}"  class="form-control" name="stock" [(ngModel)]="restar" style="font-size:2rem">
                   </div>
                   <button type="submit" class="btn btn-secundary btn-lg btn-block" (click)="delete(pr.id)">Agregar</button>
                 </div>
