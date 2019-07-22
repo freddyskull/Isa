@@ -112,7 +112,9 @@ export class FormFacturaComponent implements OnInit {
   montoIv:any;
   montoEx:any;
   montoTo:any;
+  montoToIvSum:any;
   UserNom:string = "";
+  
   
   //funciones de obtención de datos y actualización de datos
   getPro(){
@@ -187,6 +189,8 @@ export class FormFacturaComponent implements OnInit {
     this.montoIv  = Object.values(this.totales)[1];
     this.montoEx  = Object.values(this.totales)[2];
     this.montoTo  = Object.values(this.totales)[3];
+    this.montoToIvSum = Object.values(this.totales)[4];
+    console.log(this.montoToIvSum + " aparte " + this.montoEx)
   }
 
   savePend(){
@@ -447,12 +451,12 @@ export class FormFacturaComponent implements OnInit {
           doc.text(130, 177, 'SUB-TOTAL BS.S ' )
           doc.text(166, 177, '' + ConvertBsPipe.prototype.transform(this.subTotal) )
           doc.text(84.5, 180.5,' MONTO TOTAL BASE IMPONIBLE 16% BS.S ' )
-          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoIv) )
+          
+          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoToIvSum) )
           doc.text(88, 184,'MONTO TOTAL EXONERADO DE IVA BS.S '  )
-          doc.text(166, 184, '' + ConvertBsPipe.prototype.transform(this.montoEx) )
-          var IvaTot = (this.montoTo - this.montoEx)
+          doc.text(166, 184, '' + ConvertBsPipe.prototype.transform(this.subTotal - this.montoIv) )
           doc.text(102, 187.5,'MONTO TOTAL I.V.A AL 16% BS.S ' )
-          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(IvaTot) )
+          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(this.montoIv) )
           doc.setFontType("bold")
           doc.text(106.5, 191,'MONTO TOTAL A PAGAR BS.S ' )
           doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(this.montoTo) )
@@ -464,14 +468,15 @@ export class FormFacturaComponent implements OnInit {
           doc.text(130, 177, 'SUB-TOTAL BS.S ' )
           doc.text(166, 177, ''  + ConvertBsPipe.prototype.transform(this.subTotal * 1.10) )
           doc.text(84.5, 180.5,' MONTO TOTAL BASE IMPONIBLE 16% BS.S ' )
-          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoIv * 1.10))
+          doc.text(166, 180.5, ''+ ConvertBsPipe.prototype.transform(this.montoToIvSum * 1.10))
           var exo = this.montoEx * 1.10
           var tot = this.montoTo * 1.10
           doc.text(88, 184,   'MONTO TOTAL EXONERADO DE IVA BS.S '  )
-          doc.text(166, 184, '' + ConvertBsPipe.prototype.transform(exo) )
+          
+          doc.text(166, 184, '' +  ConvertBsPipe.prototype.transform(exo))
           var IvaTot = (tot - exo)
           doc.text(102, 187.5,'MONTO TOTAL I.V.A AL 16% BS.S ' )
-          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(IvaTot) )
+          doc.text(166, 187.5, '' + ConvertBsPipe.prototype.transform(this.montoIv * 1.10) )
           doc.setFontType("bold")
           doc.text(106, 191,'MONTO TOTAL A PAGAR BS.S ' )
           doc.text(166, 191, '' + ConvertBsPipe.prototype.transform(tot) )

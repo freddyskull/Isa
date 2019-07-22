@@ -88,6 +88,18 @@ getPresu(){
     }
     return j;
   }
+  obtenerTotalIvaSumado(){
+    var j = 0;
+    var ult = Object.keys(this.serv.getPresupuestos()).length;
+    for(let i = 0; i < ult; i++){
+       if(this.serv.getPresupuestos()[i].iva == true){
+        j += this.serv.getPresupuestos()[i].price
+        // j += (this.serv.getPresupuestos()[i].price2 * this.usdValor) * 0.16
+       }
+    }
+    return j;
+  }
+
   obtenerTotalSinIva(){
     // console.log("total sin iva")
     var j = 0;
@@ -149,7 +161,8 @@ getPresu(){
         subTotal:this.obtenerTotal(),
         montoIv:this.obtenerTotalIva(),
         montoEx:this.obtenerTotalSinIva(),
-        montoTo:aux
+        montoTo:aux,
+        montoIvSumado:this.obtenerTotalIvaSumado()
       }
       console.log("factura con bolivares al mayor")
     }else{
@@ -170,7 +183,8 @@ getPresu(){
         subTotal:this.obtenerTotal(),
         montoIv:this.obtenerTotalIva(),
         montoEx:this.obtenerTotalSinIva(),
-        montoTo:aux
+        montoTo:aux,
+        montoIvSumado:this.obtenerTotalIvaSumado()
       }
       console.log("factura con bolivares al detal")
     }
