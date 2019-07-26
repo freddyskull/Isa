@@ -32,7 +32,7 @@ export class FormProductComponent implements OnInit {
   };
 
   constructor(private producto: ProductService, private rout: Router, private actR: ActivatedRoute) { }
-  
+  Usd:number = 0;
   good: boolean = false;
   bad: boolean = false;
   edit: boolean = false;
@@ -60,6 +60,7 @@ export class FormProductComponent implements OnInit {
     this.getCategory();
     this.user = localStorage.getItem("name")
     this.acces = localStorage.getItem("position")
+    this.converTo()
   }
   
   saveProduct(form:NgForm){
@@ -118,12 +119,26 @@ export class FormProductComponent implements OnInit {
       )
   }
   
+
+  converTo(){  
+    this.producto.getUsdValor().subscribe(
+      req => {
+        this.Usd = Object.values(req)[0].priceUSD
+      }
+    )
+  }
+
   getCategory(){
     this.producto.getCategorys().subscribe(
       req =>{
         this.category = req;
       }
     )
+  }
+
+  escoger(){
+    this.currency = 0
+    this.resetForm()
   }
 
 
